@@ -58,15 +58,17 @@ window.loadPage = loadPage;
 function setupCalculatorCollapse() {
     const btns = document.querySelectorAll('.collapse-btn');
     btns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const targetId = btn.getAttribute('data-target');
+        const targetId = btn.getAttribute('data-target');
+        if (!targetId) return; // Only section toggles, not submit buttons
+        btn.addEventListener('click', function(e) {
             const content = document.getElementById(targetId);
             const isActive = btn.classList.contains('active');
-            // Close all
-            document.querySelectorAll('.collapse-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.collapse-content').forEach(c => c.classList.remove('active'));
-            // Open this one if not already open
-            if (!isActive) {
+            if (isActive) {
+                btn.classList.remove('active');
+                content.classList.remove('active');
+            } else {
+                document.querySelectorAll('.collapse-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.collapse-content').forEach(c => c.classList.remove('active'));
                 btn.classList.add('active');
                 content.classList.add('active');
                 if (targetId === 'sip-calc') setupSIPCalculator();
@@ -79,7 +81,10 @@ function setupCalculatorCollapse() {
                 if (targetId === 'goal-calc') setupGoalCalculator();
                 if (targetId === 'retire-calc') setupRetireCalculator();
                 if (targetId === 'swp-calc') setupSWPCalculator();
-            // SWP (Systematic Withdrawal Plan) Calculator logic
+                if (targetId === 'fd-calc') {/* future FD/RD setup */}
+            }
+        });
+    });
             function setupSWPCalculator() {
                 const form = document.getElementById('swp-form');
                 const resultDiv = document.getElementById('swp-result');
@@ -263,7 +268,7 @@ function setupCalculatorCollapse() {
                     // Old Regime
                     const taxableOld = Math.max(0, income - totalDed);
                     let slabsOld;
-                    if (age === 'normal') {
+                    if (age === 'normal' || age === 'huf') {
                         slabsOld = [
                             { upto: 250000, rate: 0 },
                             { upto: 500000, rate: 0.05 },
@@ -476,9 +481,6 @@ function setupCalculatorCollapse() {
                     `<div>Estimated Gain: <b>₹${gain.toLocaleString(undefined, {maximumFractionDigits:0})}</b></div>`;
             };
         }
-        });
-    });
-}
 
 // SIP Calculator logic
 function setupSIPCalculator() {
