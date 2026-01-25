@@ -1,3 +1,36 @@
+/* Collapsible calculator sections */
+.calculator-collapse {
+    margin-top: 1.5em;
+}
+.collapse-btn {
+    width: 100%;
+    text-align: left;
+    background: #f3f4f6;
+    color: #222;
+    border: none;
+    outline: none;
+    padding: 1em 1.2em;
+    font-size: 1.08em;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.collapse-btn.active, .collapse-btn:hover {
+    background: #e5e7eb;
+}
+.collapse-content {
+    display: none;
+    padding: 1em 0.5em 1.5em 0.5em;
+    border-left: 3px solid #e5e7eb;
+    border-radius: 0 0 8px 8px;
+    background: #fafbfc;
+    margin-bottom: 1em;
+}
+.collapse-content.active {
+    display: block;
+}
 /* Card and section header styles for fund types page */
 .card-section {
     background: #fff;
@@ -48,8 +81,13 @@
     background: #eff6ff;
 }
 @media (max-width: 768px) {
-    .styled-table, .styled-table th, .styled-table td { font-size: 0.9em; }
+    html, body {
+        font-size: 1.08em;
+    }
+    .styled-table, .styled-table th, .styled-table td { font-size: 1em; }
     .styled-table th, .styled-table td { padding: 12px 10px; }
+    .section-header { font-size: 1.08em; padding: 14px 14px; }
+    .card-content { padding: 18px 8px 8px 8px; }
 }
 
 /* Reset and base styles */

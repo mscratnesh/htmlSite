@@ -1,0 +1,92 @@
+<div class="card-section">
+  <div class="section-header">F&O (Futures & Options)</div>
+  <div class="card-content">
+    <p>Futures and Options (F&O) are derivative contracts traded on exchanges like NSE, allowing speculation on underlying assets such as Nifty index, stocks, or commodities without owning them. They enable hedging risks or leveraging positions with defined obligations and rights. </p>
+
+    <h3 style="margin-top:2em; margin-bottom:0.7em;">Futures Basics</h3>
+    <p>Futures are binding agreements to buy or sell an asset at a set price on a future date, with daily mark-to-market settlements. Buyers profit if prices rise; sellers if they fall, offering unlimited risk/reward. Lot sizes are standardized, like 25 units for Nifty futures. </p>
+
+    <h3 style="margin-top:2em; margin-bottom:0.7em;">Options Basics</h3>
+    <p>Options grant the right (not obligation) to buy (call) or sell (put) at a strike price before expiry; buyers pay a premium. Calls suit bullish views, puts bearish ones, with max loss limited to premium for buyers. </p>
+
+    <h3 style="margin-top:2em; margin-bottom:0.7em;">Key Differences</h3>
+    <table class="styled-table" style="margin-bottom:1.5em;">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Futures</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Obligation</td>
+          <td>Mandatory delivery</td>
+          <td>Right, no obligation</td>
+        </tr>
+        <tr>
+          <td>Cost</td>
+          <td>Margin required</td>
+          <td>Premium for buyers</td>
+        </tr>
+        <tr>
+          <td>Profit/Loss</td>
+          <td>Unlimited both ways</td>
+          <td>Limited for buyers</td>
+        </tr>
+        <tr>
+          <td>Use Case</td>
+          <td>Hedging/directional</td>
+          <td>Strategies like strangles </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>F&O trading requires margins, suits short-term plays, and ties into technical analysis via Greeks and pointers.</p>
+
+    <h3 style="margin-top:2em; margin-bottom:0.7em;">Option Greeks</h3>
+    <p>Option Greeks are critical risk measures in F&O trading, quantifying how options premiums respond to changes in underlying price, time, volatility, and rates. They guide position management, hedging, and strategy selection like Delta-neutral strangles or Theta-positive selling in Nifty weekly expiries. </p>
+
+    <h4 style="margin-top:1.5em; margin-bottom:0.7em;">Integrating Greeks into F&O</h4>
+    <p>Futures have fixed Delta (1.0), but options Greeks dynamically affect combined F&O portfolios. Traders monitor net Greeks to balance risks—e.g., high Vega exposure suits volatility plays, while negative Theta favors short options against long futures. Use them for real-time adjustments via tools like Sensibull on NSE. </p>
+
+    <h4 style="margin-top:1.5em; margin-bottom:0.7em;">Effects on Trading Strategies</h4>
+    <table class="styled-table" style="margin-bottom:1.5em;">
+      <thead>
+        <tr>
+          <th>Greek</th>
+          <th>F&O Impact</th>
+          <th>Trading Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Delta</td>
+          <td>Directional exposure; hedge futures with opposite options</td>
+          <td>Buy Nifty call (Δ +0.5) vs. short future for partial cover </td>
+        </tr>
+        <tr>
+          <td>Gamma</td>
+          <td>Accelerates Delta changes; risky near expiry</td>
+          <td>Avoid high Γ in calendar spreads; rehedge frequently </td>
+        </tr>
+        <tr>
+          <td>Theta</td>
+          <td>Time decay erodes long options, boosts shorts</td>
+          <td>Sell puts with futures for positive Θ income </td>
+        </tr>
+        <tr>
+          <td>Vega</td>
+          <td>Volatility sensitivity; ignores futures</td>
+          <td>Long strangles profit from IV spikes pre-events </td>
+        </tr>
+        <tr>
+          <td>Rho</td>
+          <td>Minor for short-term F&O; bigger in LEAPS</td>
+          <td>Negligible in weekly Nifty trades </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Greeks interact (e.g., rising volatility boosts Vega but alters Delta), demanding portfolio-level monitoring to avoid losses from unhedged moves.</p>
+  </div>
+</div>
