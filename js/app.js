@@ -512,7 +512,7 @@ function setupSIPCalculator() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadPage('home');
+    loadPage('new-home');
 });
 
 // SheetDB API integration for review form

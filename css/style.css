@@ -41,6 +41,74 @@
     width: 95%;
     overflow: hidden;
 }
+
+
+header {
+    background: ##e5e7eb;
+    color: #222;
+    padding: 1rem 2rem 0.5rem 2rem;
+}
+
+.header-content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    position: relative;
+    min-height: 110px;
+}
+
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    height: 105px;
+    width: auto;
+    display: block;
+    padding-left: 10px;
+}
+
+.topnav {
+    background: none;
+    padding: 0;
+}
+
+    .topnav ul {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: 0;
+    }
+
+    .topnav li {
+        margin: 0 1.2rem 0 0;
+        white-space: nowrap;
+    }
+
+        .topnav li:last-child {
+            margin-right: 0;
+        }
+
+    .topnav a {
+        display: block;
+        color: #222;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 1rem 0.5rem 0.5rem 0.5rem;
+        transition: color 0.2s, background 0.2s;
+    }
+
+        .topnav a:hover {
+            color: #38b000;
+            background: none;
+        }
+
+
 .section-header {
     background: #e5e7eb;
     color: #222;
@@ -86,7 +154,7 @@
     }
     .styled-table, .styled-table th, .styled-table td { font-size: 1em; }
     .styled-table th, .styled-table td { padding: 12px 10px; }
-    .section-header { font-size: 1.08em; padding: 14px 14px; }
+    .section-header { font-size: 1.08em; padding: 10px 10px; }
     .card-content { padding: 18px 8px 8px 8px; }
 }
 
@@ -110,9 +178,9 @@ html {
 }
 
 header {
-    background: #2c3e50;
+    background: #e5e7eb;
     color: #fff;
-    padding: 1.5rem 0 1rem 0;
+    padding: 1rem 0 1rem 0;
     box-shadow: 0 2px 8px rgba(44,62,80,0.07);
     /* Remove width/max-width/margin for full background */
 }
