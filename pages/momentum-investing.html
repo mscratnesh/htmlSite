@@ -1,0 +1,101 @@
+﻿<div class="page-meta" data-page-title="Momentum Investing | Let Money Earn" data-page-description="Momentum investing strategy using Sharpe Ratio ranking in Nifty 500 stocks."></div>
+<h1 class="page-title">Momentum Investing</h1>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128200;</span>
+        <span>Overview</span>
+    </h2>
+    <div class="card-content">
+        <p style="font-size:1.1em; margin-bottom:1.2em; line-height:1.7;">
+            Momentum investing flips the "buy low, sell high" mantra by buying high and selling higher, capitalizing on persisting upward price trends in outperforming assets. Academic research confirms it often beats benchmarks like Nifty 500, as winners continue rallying due to investor herding and fundamentals.
+        </p>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128202;</span>
+        <span>Strategy Overview: Sharpe Ratio Momentum in Nifty 500</span>
+    </h2>
+    <div class="card-content">
+        <p style="margin-bottom:1.2em; line-height:1.7;">
+            Filter Nifty 500 stocks by Sharpe Ratio (risk-adjusted returns: (Return - Risk-Free Rate)/Volatility), ranking all ~500 via a spreadsheet. Select top 30; invest equally in top 10 for diversified exposure. Rebalance monthly (or weekly) on the 1st: Sell any holdings outside top 30, divide proceeds equally into new top-10 entries. This systematic rotation captures momentum while limiting drawdowns.
+        </p>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128221;</span>
+        <span>Implementation Rules</span>
+    </h2>
+    <div class="card-content">
+        <ul style="font-size:1.05em; margin-bottom:1.2em; padding-left:2em;">
+            <li style="margin-bottom:0.6em;"><b>Universe:</b> Nifty 500 (large/mid-caps for liquidity in delivery trades).</li>
+            <li style="margin-bottom:0.6em;"><b>Initial Allocation:</b> Equal weight top 10 (e.g., ₹10L portfolio → ₹1L each).</li>
+            <li style="margin-bottom:0.6em;"><b>Rebalancing:</b> Monthly check—if 3 stocks drop out, sell them (get ~₹3L), buy 3 new top-10 equally (₹1L each).</li>
+            <li style="margin-bottom:0.6em;"><b>Lumpsum Timing:</b> Deploy major cash during rebalances or post-10-15% quarterly corrections.</li>
+            <li style="margin-bottom:0.6em;"><b>Cash Buffer:</b> Park 5% in safe ETFs like Nippon India ETF Nifty Bees or gold SGBs; deploy on dips for opportunistic buys.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128202;</span>
+        <span>Example Rebalance (Hypothetical Monthly)</span>
+    </h2>
+    <div class="card-content">
+        <table class="styled-table" style="margin-bottom:1.2em;">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Stocks Out (Sell)</th>
+                    <th>Proceeds</th>
+                    <th>New Top-10 (Buy Equally)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3 Stocks Drop</td>
+                    <td>Stock A, B, C</td>
+                    <td>₹3L total</td>
+                    <td>Stock X (₹1L), Y (₹1L), Z (₹1L)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#9989;</span>
+        <span>Pros &amp; Cons</span>
+    </h2>
+    <div class="card-content">
+        <table class="styled-table" style="margin-bottom:1.2em;">
+            <thead>
+                <tr>
+                    <th>Pros</th>
+                    <th>Cons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Beats buy-hold via rotation (10-15% alpha/year)</td>
+                    <td>Transaction costs/taxes on frequent sells</td>
+                </tr>
+                <tr>
+                    <td>Sharpe focus minimizes volatility</td>
+                    <td>Lags in sharp reversals</td>
+                </tr>
+                <tr>
+                    <td>Simple Google Sheets automation</td>
+                    <td>Top-10 concentration risk (diversify buffer)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

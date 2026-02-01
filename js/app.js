@@ -240,7 +240,22 @@ const seoConfig = {
             "name": "Contact",
             "url": "https://www.letmoneyearn.in/pages/contact.html"
         }
-    }
+    },
+    "momentum-investing": {
+        title: "Momentum Investing | Let Money Earn",
+        description: "Sharpe Ratio momentum strategy using Nifty 500 ranking and monthly rebalancing.",
+        jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": "Momentum Investing",
+            "description": "Sharpe Ratio momentum strategy with Nifty 500 ranking and monthly rebalancing.",
+            "provider": {
+                "@type": "Organization",
+                "name": "Let Money Earn",
+                "url": "https://www.letmoneyearn.in/"
+            }
+        }
+    },
 };
 
 // Collapsible calculators logic
