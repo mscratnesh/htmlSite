@@ -438,7 +438,7 @@ footer {
     }
 
     .topnav ul {
-        display: none;
+        display: none !important;
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
@@ -446,7 +446,7 @@ footer {
     }
 
     .topnav.open ul {
-        display: flex;
+        display: flex !important;
     }
 
     .topnav li {
