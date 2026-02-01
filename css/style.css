@@ -409,3 +409,47 @@ footer {
         margin-bottom: 0.2rem;
     }
 }
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.menu-toggle span {
+    width: 26px;
+    height: 3px;
+    background: #222;
+    border-radius: 2px;
+    display: block;
+}
+
+@media (max-width: 700px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .topnav {
+        width: 100%;
+    }
+
+    .topnav ul {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.8rem 0;
+    }
+
+    .topnav.open ul {
+        display: flex;
+    }
+
+    .topnav li {
+        margin: 0;
+    }
+}
