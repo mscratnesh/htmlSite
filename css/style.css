@@ -465,3 +465,15 @@ footer {
         font-size: 1.8em;
     }
 }
+
+.page-title {
+    font-size: 2em;
+    font-weight: 700;
+    color: #1a3a3a;
+    margin: 0 0 0.8em 0;
+}
+@media (max-width: 700px) {
+    .page-title {
+        font-size: 1.6em;
+    }
+}

@@ -1,0 +1,109 @@
+﻿<div class="page-meta" data-page-title="Moving Average Conversion | Let Money Earn" data-page-description="Learn a multi-SMA crossover system using 5, 10, 50, and 250 day moving averages for delivery trading."></div>
+<h1 class="page-title">Moving Average Conversion</h1>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128202;</span>
+        <span>Overview</span>
+    </h2>
+    <div class="card-content">
+        <p style="font-size:1.1em; margin-bottom:1.2em; line-height:1.7;">
+            Moving Average Conversion with daily periods like 5, 10, 50, and 250 uses crossovers among these Simple Moving Averages (SMAs) to confirm trend shifts, filter noise, and time entries/exits in delivery-based stock trading on NSE.
+        </p>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128200;</span>
+        <span>Standard Hierarchy &amp; Roles</span>
+    </h2>
+    <div class="card-content">
+        <ul style="font-size:1.05em; margin-bottom:1.2em; padding-left:2em;">
+            <li style="margin-bottom:0.6em;"><b>5-day SMA:</b> Short-term momentum; reacts fastest to price changes, ideal for entry triggers.</li>
+            <li style="margin-bottom:0.6em;"><b>10-day SMA:</b> Near-term trend; confirms 5-day signals, reduces minor whipsaws.</li>
+            <li style="margin-bottom:0.6em;"><b>50-day SMA:</b> Medium-term trend filter; acts as dynamic support/resistance (weekly equivalent).</li>
+            <li style="margin-bottom:0.6em;"><b>250-day SMA:</b> Long-term trend baseline (~1-year); major bull/bear divider, rarely crossed.</li>
+        </ul>
+        <p style="margin-bottom:1.2em; line-height:1.7;">Price above all = strong uptrend; below all = downtrend. Stacking aligns for confluence.</p>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128221;</span>
+        <span>Crossover Signals</span>
+    </h2>
+    <div class="card-content">
+        <ul style="font-size:1.05em; margin-bottom:1.2em; padding-left:2em;">
+            <li style="margin-bottom:0.6em;"><b>Short-Term Buy (Golden Cross Minor):</b> 5-SMA crosses above 10-SMA + both above 50-SMA. Enter delivery longs (e.g., RELIANCE at support).</li>
+            <li style="margin-bottom:0.6em;"><b>Medium-Term Confirmation:</b> 10-SMA &gt; 50-SMA (while above 250-SMA). Scale in; hold positional.</li>
+            <li style="margin-bottom:0.6em;"><b>Major Bull Shift:</b> 50-SMA crosses above 250-SMA ("Big Golden Cross"). Strong buy for multi-month holds.</li>
+            <li style="margin-bottom:0.6em;"><b>Sell Signals:</b> Reverse crosses (e.g., 5&lt;10, or 50&lt;250 "Death Cross"). Exit or avoid.</li>
+            <li style="margin-bottom:0.6em;"><b>DMA Twist:</b> Displace shorter MAs +3-5 bars forward for earlier signals (e.g., 5-DMA +3 over 10-DMA).</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128188;</span>
+        <span>Trading Rules for Delivery</span>
+    </h2>
+    <div class="card-content">
+        <ul style="font-size:1.05em; margin-bottom:1.2em; padding-left:2em;">
+            <li style="margin-bottom:0.6em;"><b>Entry:</b> Bullish crossover (5&gt;10&gt;50, all &gt;250) on volume &gt;1.5x avg. Buy full qty for T+1.</li>
+            <li style="margin-bottom:0.6em;"><b>Stop-Loss:</b> Below 50-SMA or 2-3% from entry.</li>
+            <li style="margin-bottom:0.6em;"><b>Target/Exit:</b> Trail to 10-SMA or reverse cross; partial at 50-SMA resistance.</li>
+            <li style="margin-bottom:0.6em;"><b>Filters:</b> ADX&gt;25 (trending); RSI 40-60 avoids extremes. Skip if 50&lt;250 (bear filter).</li>
+        </ul>
+        <p style="margin-bottom:1.2em; line-height:1.7;"><b>Example:</b> RELIANCE Daily — 5-SMA crosses 10-SMA at ₹2850 (above 50-SMA ₹2820, 250-SMA ₹2600) → Buy 100 shares. Hold to 50-SMA death cross at ₹3100 (+9%) or trail 10-SMA.</p>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128202;</span>
+        <span>Multi-MA Dashboard</span>
+    </h2>
+    <div class="card-content">
+        <table class="styled-table" style="margin-bottom:1.2em;">
+            <thead>
+                <tr>
+                    <th>Signal Type</th>
+                    <th>MAs Involved</th>
+                    <th>Strength</th>
+                    <th>India Delivery Use</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Short Entry</td>
+                    <td>5 &gt; 10</td>
+                    <td>Medium</td>
+                    <td>Quick positional (1-2 weeks)</td>
+                </tr>
+                <tr>
+                    <td>Medium Bull</td>
+                    <td>10 &gt; 50 &gt; 250</td>
+                    <td>High</td>
+                    <td>Scale-in, 1-3 months</td>
+                </tr>
+                <tr>
+                    <td>Major Trend</td>
+                    <td>50 &gt; 250</td>
+                    <td>Very High</td>
+                    <td>Long-term buy-and-hold</td>
+                </tr>
+                <tr>
+                    <td>Bear Filter</td>
+                    <td>Any below 250</td>
+                    <td>Avoid</td>
+                    <td>Stay cash/switch Wheel puts</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
