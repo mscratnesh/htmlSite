@@ -74,7 +74,7 @@ header {
 
 .topnav {
     background: none;
-    padding: 0;
+    padding-right: 8px;
 }
 
     .topnav ul {
