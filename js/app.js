@@ -45,7 +45,8 @@ const seoConfig = {
             "name": "Services",
             "itemListElement": [
                 { "@type": "Service", "name": "Mutual Fund Distribution" },
-                { "@type": "Service", "name": "Insurance & Bonds" },
+                { "@type": "Service", "name": "Insurance" },
+                { "@type": "Service", "name": "Bonds & NCDs" },
                 { "@type": "Service", "name": "Medical Insurance" },
                 { "@type": "Service", "name": "Share Market & FnO Classes" }
             ]
@@ -165,7 +166,8 @@ const seoConfig = {
             "name": "Services",
             "itemListElement": [
                 { "@type": "Service", "name": "Mutual Fund Distribution" },
-                { "@type": "Service", "name": "Insurance & Bonds" },
+                { "@type": "Service", "name": "Insurance" },
+                { "@type": "Service", "name": "Bonds & NCDs" },
                 { "@type": "Service", "name": "Medical Insurance" },
                 { "@type": "Service", "name": "Share Market & FnO Classes" }
             ]
