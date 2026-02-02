@@ -256,6 +256,36 @@ const seoConfig = {
             }
         }
     },
+    "bori-system": {
+        title: "Bori System (LIFO) | Let Money Earn",
+        description: "Rule-based algorithmic trading using LIFO discipline for crude oil futures.",
+        jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": "Bori System (LIFO)",
+            "description": "LIFO-based algorithmic trading strategy for crude oil futures.",
+            "provider": {
+                "@type": "Organization",
+                "name": "Let Money Earn",
+                "url": "https://www.letmoneyearn.in/"
+            }
+        }
+    },
+    "0dte-option-selling": {
+        title: "0DTE Option Selling | Let Money Earn",
+        description: "Same-day expiry options selling strategy with strict risk controls.",
+        jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": "0DTE Option Selling",
+            "description": "Expiry-day options selling strategy with theta decay capture and risk management.",
+            "provider": {
+                "@type": "Organization",
+                "name": "Let Money Earn",
+                "url": "https://www.letmoneyearn.in/"
+            }
+        }
+    },
 };
 
 // Collapsible calculators logic

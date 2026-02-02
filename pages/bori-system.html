@@ -1,0 +1,118 @@
+<div class="page-meta" data-page-title="Bori System (LIFO) | Let Money Earn" data-page-description="Rule-based algorithmic trading using LIFO discipline for crude oil futures."></div>
+<h1 class="page-title">Bori System (LIFO)</h1>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128202;</span>
+        <span>Overview</span>
+    </h2>
+    <div class="card-content">
+        <p style="font-size:1.1em; margin-bottom:1.2em; line-height:1.7;">
+            The Bori System is a custom, rule-based algorithmic trading strategy for crude oil (likely MCX CrudeOil futures in India) that uses Last In, First Out (LIFO) discipline for position management. It involves accumulating long positions by buying at regular downside intervals during dips, then selling the most recent positions first as price recovers in predefined intervals.
+        </p>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128221;</span>
+        <span>Core Mechanics</span>
+    </h2>
+    <div class="card-content">
+        <ul style="font-size:1.05em; margin-bottom:1.2em; padding-left:2em;">
+            <li style="margin-bottom:0.6em;"><b>Entry Rules:</b> Buy fixed quantities (e.g., 1 lot) at predetermined price levels below the current market, such as every ?10-20 drop, creating a ladder of positions during downside moves.</li>
+            <li style="margin-bottom:0.6em;"><b>LIFO Discipline:</b> Treats positions as a stack—sell the highest-cost (last bought) position first when price hits upside sell intervals (e.g., every ?10-20 rise), locking profits on recent buys while holding earlier cheaper ones.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128200;</span>
+        <span>Example Flow</span>
+    </h2>
+    <div class="card-content">
+        <table class="styled-table" style="margin-bottom:1.2em;">
+            <thead>
+                <tr>
+                    <th>Price Action</th>
+                    <th>Action</th>
+                    <th>Position Stack (LIFO)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>?5,000</td>
+                    <td>Buy 1 lot</td>
+                    <td>[?5,000]</td>
+                </tr>
+                <tr>
+                    <td>?4,980 (-?20)</td>
+                    <td>Buy 1 lot</td>
+                    <td>[?5,000, ?4,980]</td>
+                </tr>
+                <tr>
+                    <td>?4,960 (-?20)</td>
+                    <td>Buy 1 lot</td>
+                    <td>[?5,000, ?4,980, ?4,960]</td>
+                </tr>
+                <tr>
+                    <td>?4,980 (+?20)</td>
+                    <td>Sell last (?4,960)</td>
+                    <td>[?5,000, ?4,980]</td>
+                </tr>
+                <tr>
+                    <td>?5,000 (+?20)</td>
+                    <td>Sell last (?4,980)</td>
+                    <td>[?5,000]</td>
+                </tr>
+                <tr>
+                    <td>?5,020 (+?20)</td>
+                    <td>Sell last (?5,000)</td>
+                    <td>[ ] (flat)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#9989;</span>
+        <span>Key Features</span>
+    </h2>
+    <div class="card-content">
+        <ul style="font-size:1.05em; margin-bottom:1.2em; padding-left:2em;">
+            <li style="margin-bottom:0.6em;"><b>Automated Execution:</b> Algorithm-driven buying and selling based on fixed intervals.</li>
+            <li style="margin-bottom:0.6em;"><b>Risk Control:</b> Maximum position size limits prevent overexposure during extended downtrends.</li>
+            <li style="margin-bottom:0.6em;"><b>Profit Locking:</b> LIFO approach captures small gains on recent entries while keeping cheaper base positions.</li>
+            <li style="margin-bottom:0.6em;"><b>Market Suited:</b> Works best in ranging/oscillating markets; struggles in sustained trends.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#9888;</span>
+        <span>Considerations</span>
+    </h2>
+    <div class="card-content">
+        <ul style="font-size:1.05em; margin-bottom:1.2em; padding-left:2em;">
+            <li style="margin-bottom:0.6em;"><b>Margin Requirements:</b> Multiple open positions require significant capital; monitor MCX margin rules.</li>
+            <li style="margin-bottom:0.6em;"><b>Trend Risk:</b> Strong downtrends can accumulate large unrealized losses before reversal.</li>
+            <li style="margin-bottom:0.6em;"><b>Execution Speed:</b> Requires reliable API access for automated order placement.</li>
+            <li style="margin-bottom:0.6em;"><b>Backtesting Essential:</b> Validate interval settings and max position limits on historical data.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card-section">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#128279;</span>
+        <span>Related Pages</span>
+    </h2>
+    <div class="card-content" style="font-size:1.05em;">
+        <a href="#" onclick="loadPage('trading-strategies')" style="color:#22b573; text-decoration:none;">Trading Strategies</a> |
+        <a href="#" onclick="loadPage('risk-management')" style="color:#22b573; text-decoration:none;">Risk Management</a>
+    </div>
+</div>
