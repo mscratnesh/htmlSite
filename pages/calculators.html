@@ -2,281 +2,281 @@
 <h1 class="page-title">Financial Calculators</h1>
 
 <div class="card-section">
-  <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
-    <span style="font-size:1.5em;">&#129518;</span>
-    <span>Financial Calculators</span>
-  </h2>
-  <div class="card-content">
-    <p>Explore a range of interactive financial calculators. Click a section to expand and use the calculator:</p>
-    <div class="calculator-collapse">
-      <button class="collapse-btn" type="button" data-target="sip-calc">SIP Calculator</button>
-      <div class="collapse-content" id="sip-calc">
-        <form id="sip-form" style="margin-bottom:1em;">
-          <div style="margin-bottom:0.7em;">
-            <label for="sip-amount">Monthly SIP Amount (₹):</label><br>
-            <input type="number" id="sip-amount" min="1" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="sip-rate">Expected Annual Return (%):</label><br>
-            <input type="number" id="sip-rate" min="1" max="50" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="sip-years">Investment Duration (years):</label><br>
-            <input type="number" id="sip-years" min="1" max="50" required style="width:100%;max-width:220px;">
-          </div>
-          <button type="submit" class="collapse-btn" style="width:90px;max-width:90px;font-size:0.95em;padding:0.4em 0.5em;">Calculate</button>
-        </form>
-        <div id="sip-result" style="font-weight:500;"></div>
-      </div>
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">&#129518;</span>
+        <span>Financial Calculators</span>
+    </h2>
+    <div class="card-content">
+        <p>Explore a range of interactive financial calculators. Click a section to expand and use the calculator:</p>
+        <div class="calculator-collapse">
+            <button class="collapse-btn" type="button" data-target="sip-calc">SIP Calculator</button>
+            <div class="collapse-content" id="sip-calc">
+                <form id="sip-form" style="margin-bottom:1em;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="sip-amount">Monthly SIP Amount (₹):</label><br>
+                        <input type="number" id="sip-amount" min="1" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="sip-rate">Expected Annual Return (%):</label><br>
+                        <input type="number" id="sip-rate" min="1" max="50" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="sip-years">Investment Duration (years):</label><br>
+                        <input type="number" id="sip-years" min="1" max="50" required style="width:100%;max-width:220px;">
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:90px;max-width:90px;font-size:0.95em;padding:0.4em 0.5em;">Calculate</button>
+                </form>
+                <div id="sip-result" style="font-weight:500;"></div>
+            </div>
 
-      <button class="collapse-btn" type="button" data-target="lump-calc">Lump Sum Calculator</button>
-      <div class="collapse-content" id="lump-calc">
-        <form id="lump-form" style="margin-bottom:1em;">
-          <div style="margin-bottom:0.7em;">
-            <label for="lump-amount">Lump Sum Amount (₹):</label><br>
-            <input type="number" id="lump-amount" min="1" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="lump-rate">Expected Annual Return (%):</label><br>
-            <input type="number" id="lump-rate" min="1" max="50" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="lump-years">Investment Duration (years):</label><br>
-            <input type="number" id="lump-years" min="1" max="50" required style="width:100%;max-width:220px;">
-          </div>
-          <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
-        </form>
-        <div id="lump-result" style="font-weight:500;"></div>
-      </div>
+            <button class="collapse-btn" type="button" data-target="lump-calc">Lump Sum Calculator</button>
+            <div class="collapse-content" id="lump-calc">
+                <form id="lump-form" style="margin-bottom:1em;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="lump-amount">Lump Sum Amount (₹):</label><br>
+                        <input type="number" id="lump-amount" min="1" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="lump-rate">Expected Annual Return (%):</label><br>
+                        <input type="number" id="lump-rate" min="1" max="50" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="lump-years">Investment Duration (years):</label><br>
+                        <input type="number" id="lump-years" min="1" max="50" required style="width:100%;max-width:220px;">
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
+                </form>
+                <div id="lump-result" style="font-weight:500;"></div>
+            </div>
 
-      <button class="collapse-btn" type="button" data-target="lumpsip-calc">Lump Sum + SIP Calculator</button>
-      <div class="collapse-content" id="lumpsip-calc">
-        <form id="lumpsip-form" style="margin-bottom:1em;">
-          <div style="margin-bottom:0.7em;">
-            <label for="lumpsip-lump">Lump Sum Amount (₹):</label><br>
-            <input type="number" id="lumpsip-lump" min="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="lumpsip-sip">Monthly SIP Amount (₹):</label><br>
-            <input type="number" id="lumpsip-sip" min="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="lumpsip-rate">Expected Annual Return (%):</label><br>
-            <input type="number" id="lumpsip-rate" min="1" max="50" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="lumpsip-years">Investment Duration (years):</label><br>
-            <input type="number" id="lumpsip-years" min="1" max="50" required style="width:100%;max-width:220px;">
-          </div>
-          <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
-        </form>
-        <div id="lumpsip-result" style="font-weight:500;"></div>
-      </div>
-      
-      <button class="collapse-btn" type="button" data-target="tax-calc">Income Tax Calculator</button>
-      <div class="collapse-content" id="tax-calc">
-        <form id="tax-form" style="margin-bottom:1em;display:flex;flex-wrap:wrap;gap:2em;align-items:flex-end;">
-          <div style="min-width:220px;max-width:260px;">
-            <label for="tax-income">Total Annual Income (₹):</label><br>
-            <input type="number" id="tax-income" min="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="min-width:220px;max-width:260px;">
-            <label for="tax-deduction">Section 80C (Investments, etc.) (₹):</label><br>
-            <input type="number" id="tax-deduction" min="0" value="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="min-width:220px;max-width:260px;">
-            <label for="tax-medical">Medical Insurance (80D) (₹):</label><br>
-            <input type="number" id="tax-medical" min="0" value="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="min-width:220px;max-width:260px;">
-            <label for="tax-hra">HRA Received (₹):</label><br>
-            <input type="number" id="tax-hra" min="0" value="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="min-width:220px;max-width:260px;">
-            <label for="tax-rent">Rent Paid (₹):</label><br>
-            <input type="number" id="tax-rent" min="0" value="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="min-width:220px;max-width:260px;">
-            <label for="tax-pf">PF (Provident Fund) (₹):</label><br>
-            <input type="number" id="tax-pf" min="0" value="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="min-width:180px;max-width:220px;">
-            <label for="tax-age">Age Group:</label><br>
-            <select id="tax-age" style="width:100%;max-width:220px;">
-              <option value="normal">Below 60</option>
-              <option value="senior">60-80</option>
-              <option value="super">Above 80</option>
-              <option value="huf">HUF</option>
-            </select>
-          </div>
-          <div style="min-width:160px;max-width:180px;">
-            <button type="submit" class="collapse-btn" style="width:100%;max-width:180px;">Calculate</button>
-          </div>
-        </form>
-        <div id="tax-result" style="display:flex;gap:2em;flex-wrap:wrap;"></div>
-      </div>
+            <button class="collapse-btn" type="button" data-target="lumpsip-calc">Lump Sum + SIP Calculator</button>
+            <div class="collapse-content" id="lumpsip-calc">
+                <form id="lumpsip-form" style="margin-bottom:1em;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="lumpsip-lump">Lump Sum Amount (₹):</label><br>
+                        <input type="number" id="lumpsip-lump" min="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="lumpsip-sip">Monthly SIP Amount (₹):</label><br>
+                        <input type="number" id="lumpsip-sip" min="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="lumpsip-rate">Expected Annual Return (%):</label><br>
+                        <input type="number" id="lumpsip-rate" min="1" max="50" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="lumpsip-years">Investment Duration (years):</label><br>
+                        <input type="number" id="lumpsip-years" min="1" max="50" required style="width:100%;max-width:220px;">
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
+                </form>
+                <div id="lumpsip-result" style="font-weight:500;"></div>
+            </div>
 
-      <button class="collapse-btn" type="button" data-target="cgt-calc">Capital Gains Tax Calculator</button>
-      <div class="collapse-content" id="cgt-calc">
-        <form id="cgt-form" style="margin-bottom:1em;max-width:500px;">
-          <div style="margin-bottom:0.7em;">
-            <label for="cgt-type">Asset Type:</label><br>
-            <select id="cgt-type" style="width:100%;max-width:220px;">
-              <option value="stock">Stocks (Listed)</option>
-              <option value="equity-mf">Equity Mutual Fund</option>
-              <option value="debt-mf">Debt Mutual Fund</option>
-              <option value="property">Property</option>
-            </select>
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="cgt-buy">Purchase Price (₹):</label><br>
-            <input type="number" id="cgt-buy" min="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="cgt-sell">Sale Price (₹):</label><br>
-            <input type="number" id="cgt-sell" min="0" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="cgt-years">Holding Period (years):</label><br>
-            <input type="number" id="cgt-years" min="0" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="cgt-exp">Expenses on Sale (₹):</label><br>
-            <input type="number" id="cgt-exp" min="0" value="0" required style="width:100%;max-width:220px;">
-          </div>
-          <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
-        </form>
-        <div id="cgt-result" style="font-weight:500;"></div>
-      </div>
+            <button class="collapse-btn" type="button" data-target="tax-calc">Income Tax Calculator</button>
+            <div class="collapse-content" id="tax-calc">
+                <form id="tax-form" style="margin-bottom:1em;display:flex;flex-wrap:wrap;gap:2em;align-items:flex-end;">
+                    <div style="min-width:220px;max-width:260px;">
+                        <label for="tax-income">Total Annual Income (₹):</label><br>
+                        <input type="number" id="tax-income" min="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="min-width:220px;max-width:260px;">
+                        <label for="tax-deduction">Section 80C (Investments, etc.) (₹):</label><br>
+                        <input type="number" id="tax-deduction" min="0" value="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="min-width:220px;max-width:260px;">
+                        <label for="tax-medical">Medical Insurance (80D) (₹):</label><br>
+                        <input type="number" id="tax-medical" min="0" value="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="min-width:220px;max-width:260px;">
+                        <label for="tax-hra">HRA Received (₹):</label><br>
+                        <input type="number" id="tax-hra" min="0" value="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="min-width:220px;max-width:260px;">
+                        <label for="tax-rent">Rent Paid (₹):</label><br>
+                        <input type="number" id="tax-rent" min="0" value="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="min-width:220px;max-width:260px;">
+                        <label for="tax-pf">PF (Provident Fund) (₹):</label><br>
+                        <input type="number" id="tax-pf" min="0" value="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="min-width:180px;max-width:220px;">
+                        <label for="tax-age">Age Group:</label><br>
+                        <select id="tax-age" style="width:100%;max-width:220px;">
+                            <option value="normal">Below 60</option>
+                            <option value="senior">60-80</option>
+                            <option value="super">Above 80</option>
+                            <option value="huf">HUF</option>
+                        </select>
+                    </div>
+                    <div style="min-width:160px;max-width:180px;">
+                        <button type="submit" class="collapse-btn" style="width:100%;max-width:180px;">Calculate</button>
+                    </div>
+                </form>
+                <div id="tax-result" style="display:flex;gap:2em;flex-wrap:wrap;"></div>
+            </div>
 
-      <button class="collapse-btn" type="button" data-target="retire-calc">Retirement Corpus Calculator</button>
-      <div class="collapse-content" id="retire-calc">
-        <form id="retire-form" style="margin-bottom:1em;max-width:500px;">
-          <div style="margin-bottom:0.7em;">
-            <label for="retire-age">Current Age:</label><br>
-            <input type="number" id="retire-age" min="18" max="70" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="retire-retire">Retirement Age:</label><br>
-            <input type="number" id="retire-retire" min="30" max="80" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="retire-life">Life Expectancy (years):</label><br>
-            <input type="number" id="retire-life" min="60" max="120" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="retire-exp">Monthly Expenses (today, ₹):</label><br>
-            <input type="number" id="retire-exp" min="1" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="retire-infl">Expected Inflation Rate (%):</label><br>
-            <input type="number" id="retire-infl" min="1" max="15" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="retire-rate">Expected Return Post Retirement (%):</label><br>
-            <input type="number" id="retire-rate" min="1" max="15" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
-        </form>
-        <div id="retire-result" style="font-weight:500;"></div>
-      </div>
+            <button class="collapse-btn" type="button" data-target="cgt-calc">Capital Gains Tax Calculator</button>
+            <div class="collapse-content" id="cgt-calc">
+                <form id="cgt-form" style="margin-bottom:1em;max-width:500px;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="cgt-type">Asset Type:</label><br>
+                        <select id="cgt-type" style="width:100%;max-width:220px;">
+                            <option value="stock">Stocks (Listed)</option>
+                            <option value="equity-mf">Equity Mutual Fund</option>
+                            <option value="debt-mf">Debt Mutual Fund</option>
+                            <option value="property">Property</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="cgt-buy">Purchase Price (₹):</label><br>
+                        <input type="number" id="cgt-buy" min="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="cgt-sell">Sale Price (₹):</label><br>
+                        <input type="number" id="cgt-sell" min="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="cgt-years">Holding Period (years):</label><br>
+                        <input type="number" id="cgt-years" min="0" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="cgt-exp">Expenses on Sale (₹):</label><br>
+                        <input type="number" id="cgt-exp" min="0" value="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
+                </form>
+                <div id="cgt-result" style="font-weight:500;"></div>
+            </div>
 
-      <button class="collapse-btn" type="button" data-target="goal-calc">Goal-based Investment Calculator</button>
-      <div class="collapse-content" id="goal-calc">
-        <form id="goal-form" style="margin-bottom:1em;max-width:500px;">
-          <div style="margin-bottom:0.7em;">
-            <label for="goal-amount">Future Goal Amount (₹):</label><br>
-            <input type="number" id="goal-amount" min="1" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="goal-years">Years to Goal:</label><br>
-            <input type="number" id="goal-years" min="1" max="50" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="goal-rate">Expected Annual Return (%):</label><br>
-            <input type="number" id="goal-rate" min="1" max="50" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="goal-type">Investment Type:</label><br>
-            <select id="goal-type" style="width:100%;max-width:220px;">
-              <option value="sip">Monthly SIP</option>
-              <option value="lump">Lump Sum</option>
-            </select>
-          </div>
-          <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
-        </form>
-        <div id="goal-result" style="font-weight:500;"></div>
-      </div>
+            <button class="collapse-btn" type="button" data-target="retire-calc">Retirement Corpus Calculator</button>
+            <div class="collapse-content" id="retire-calc">
+                <form id="retire-form" style="margin-bottom:1em;max-width:500px;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="retire-age">Current Age:</label><br>
+                        <input type="number" id="retire-age" min="18" max="70" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="retire-retire">Retirement Age:</label><br>
+                        <input type="number" id="retire-retire" min="30" max="80" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="retire-life">Life Expectancy (years):</label><br>
+                        <input type="number" id="retire-life" min="60" max="120" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="retire-exp">Monthly Expenses (today, ₹):</label><br>
+                        <input type="number" id="retire-exp" min="1" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="retire-infl">Expected Inflation Rate (%):</label><br>
+                        <input type="number" id="retire-infl" min="1" max="15" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="retire-rate">Expected Return Post Retirement (%):</label><br>
+                        <input type="number" id="retire-rate" min="1" max="15" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
+                </form>
+                <div id="retire-result" style="font-weight:500;"></div>
+            </div>
 
-      <button class="collapse-btn" type="button" data-target="swp-calc">SWP (Systematic Withdrawal Plan) Calculator</button>
-      <div class="collapse-content" id="swp-calc">
-        <form id="swp-form" style="margin-bottom:1em;max-width:500px;">
-          <div style="margin-bottom:0.7em;">
-            <label for="swp-corpus">Initial Corpus (₹):</label><br>
-            <input type="number" id="swp-corpus" min="1" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="swp-withdraw">Monthly Withdrawal (₹):</label><br>
-            <input type="number" id="swp-withdraw" min="1" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="swp-rate">Expected Annual Return (%):</label><br>
-            <input type="number" id="swp-rate" min="1" max="20" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="swp-years">Planned Withdrawal Period (years):</label><br>
-            <input type="number" id="swp-years" min="1" max="50" required style="width:100%;max-width:220px;">
-          </div>
-          <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
-        </form>
-        <div id="swp-result" style="font-weight:500;"></div>
-      </div>     
+            <button class="collapse-btn" type="button" data-target="goal-calc">Goal-based Investment Calculator</button>
+            <div class="collapse-content" id="goal-calc">
+                <form id="goal-form" style="margin-bottom:1em;max-width:500px;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="goal-amount">Future Goal Amount (₹):</label><br>
+                        <input type="number" id="goal-amount" min="1" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="goal-years">Years to Goal:</label><br>
+                        <input type="number" id="goal-years" min="1" max="50" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="goal-rate">Expected Annual Return (%):</label><br>
+                        <input type="number" id="goal-rate" min="1" max="50" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="goal-type">Investment Type:</label><br>
+                        <select id="goal-type" style="width:100%;max-width:220px;">
+                            <option value="sip">Monthly SIP</option>
+                            <option value="lump">Lump Sum</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
+                </form>
+                <div id="goal-result" style="font-weight:500;"></div>
+            </div>
 
-      
+            <button class="collapse-btn" type="button" data-target="swp-calc">SWP (Systematic Withdrawal Plan) Calculator</button>
+            <div class="collapse-content" id="swp-calc">
+                <form id="swp-form" style="margin-bottom:1em;max-width:500px;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="swp-corpus">Initial Corpus (₹):</label><br>
+                        <input type="number" id="swp-corpus" min="1" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="swp-withdraw">Monthly Withdrawal (₹):</label><br>
+                        <input type="number" id="swp-withdraw" min="1" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="swp-rate">Expected Annual Return (%):</label><br>
+                        <input type="number" id="swp-rate" min="1" max="20" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="swp-years">Planned Withdrawal Period (years):</label><br>
+                        <input type="number" id="swp-years" min="1" max="50" required style="width:100%;max-width:220px;">
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
+                </form>
+                <div id="swp-result" style="font-weight:500;"></div>
+            </div>
 
-      <button class="collapse-btn" type="button" data-target="emi-calc">EMI Calculator</button>
-      <div class="collapse-content" id="emi-calc">
-        <form id="emi-form" style="margin-bottom:1em;">
-          <div style="margin-bottom:0.7em;">
-            <label for="emi-principal">Loan Amount (₹):</label><br>
-            <input type="number" id="emi-principal" min="1" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="emi-rate">Annual Interest Rate (%):</label><br>
-            <input type="number" id="emi-rate" min="0.1" max="50" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="emi-years">Loan Tenure (years):</label><br>
-            <input type="number" id="emi-years" min="1" max="40" required style="width:100%;max-width:220px;">
-          </div>
-          <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
-        </form>
-        <div id="emi-result" style="font-weight:500;"></div>
-      </div>
 
-      <button class="collapse-btn" type="button" data-target="emiadd-calc">EMI with Additional Payment</button>
-      <div class="collapse-content" id="emiadd-calc">
-        <form id="emiadd-form" style="margin-bottom:1em;">
-          <div style="margin-bottom:0.7em;">
-            <label for="emiadd-principal">Loan Amount (₹):</label><br>
-            <input type="number" id="emiadd-principal" min="1" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="emiadd-rate">Annual Interest Rate (%):</label><br>
-            <input type="number" id="emiadd-rate" min="0.1" max="50" step="0.01" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="emiadd-years">Loan Tenure (years):</label><br>
-            <input type="number" id="emiadd-years" min="1" max="40" required style="width:100%;max-width:220px;">
-          </div>
-          <div style="margin-bottom:0.7em;">
-            <label for="emiadd-extra">Additional Payment per Year (₹):</label><br>
-            <input type="number" id="emiadd-extra" min="0" required style="width:100%;max-width:220px;">
-          </div>
-          <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
-        </form>
-        <div id="emiadd-result" style="font-weight:500;"></div>
-      </div>
+
+            <button class="collapse-btn" type="button" data-target="emi-calc">EMI Calculator</button>
+            <div class="collapse-content" id="emi-calc">
+                <form id="emi-form" style="margin-bottom:1em;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="emi-principal">Loan Amount (₹):</label><br>
+                        <input type="number" id="emi-principal" min="1" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="emi-rate">Annual Interest Rate (%):</label><br>
+                        <input type="number" id="emi-rate" min="0.1" max="50" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="emi-years">Loan Tenure (years):</label><br>
+                        <input type="number" id="emi-years" min="1" max="40" required style="width:100%;max-width:220px;">
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
+                </form>
+                <div id="emi-result" style="font-weight:500;"></div>
+            </div>
+
+            <button class="collapse-btn" type="button" data-target="emiadd-calc">EMI with Additional Payment</button>
+            <div class="collapse-content" id="emiadd-calc">
+                <form id="emiadd-form" style="margin-bottom:1em;">
+                    <div style="margin-bottom:0.7em;">
+                        <label for="emiadd-principal">Loan Amount (₹):</label><br>
+                        <input type="number" id="emiadd-principal" min="1" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="emiadd-rate">Annual Interest Rate (%):</label><br>
+                        <input type="number" id="emiadd-rate" min="0.1" max="50" step="0.01" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="emiadd-years">Loan Tenure (years):</label><br>
+                        <input type="number" id="emiadd-years" min="1" max="40" required style="width:100%;max-width:220px;">
+                    </div>
+                    <div style="margin-bottom:0.7em;">
+                        <label for="emiadd-extra">Additional Payment per Year (₹):</label><br>
+                        <input type="number" id="emiadd-extra" min="0" required style="width:100%;max-width:220px;">
+                    </div>
+                    <button type="submit" class="collapse-btn" style="width:auto;max-width:180px;">Calculate</button>
+                </form>
+                <div id="emiadd-result" style="font-weight:500;"></div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

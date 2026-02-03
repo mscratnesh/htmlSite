@@ -288,6 +288,16 @@ const seoConfig = {
             }
         }
     },
+    "review": {
+        title: "Reviews | Let Money Earn",
+        description: "Read and share reviews about Let Money Earn.",
+        jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Reviews",
+            "url": "https://www.letmoneyearn.in/pages/review.html"
+        }
+    }
 };
 
 // Collapsible calculators logic
@@ -717,6 +727,111 @@ function setupSWPCalculator() {
     };
 }
 
+function setupReviewForm() {
+    const form = document.getElementById('review-form');
+    const messageDiv = document.getElementById('review-message');
+    if (!form) return;
+    
+    form.onsubmit = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const review = document.getElementById('review').value;
+        const rating = document.querySelector('input[name="rating"]:checked')?.value;
+        
+        if (!name || !email || !phone || !review || !rating) {
+            messageDiv.textContent = 'Please fill all fields.';
+            messageDiv.style.color = '#c00';
+            return;
+        }
+        
+        messageDiv.textContent = 'Thank you for your review! It will be displayed shortly.';
+        messageDiv.style.color = '#27ae60';
+        
+        form.reset();
+        
+        setTimeout(() => {
+            messageDiv.textContent = '';
+        }, 5000);
+    };
+    
+    loadReviewsFromSheet();
+}
+
+function loadReviewsFromSheet() {
+    const reviewsDiv = document.getElementById('reviews');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    
+    if (!reviewsDiv) return;
+    
+    const sheetDbUrl = 'https://sheetdb.io/api/v1/1b0can2pr0h1a';
+    
+    fetch(sheetDbUrl)
+        .then(response => response.json())
+        .then(data => {
+            const reviews = data.map(item => ({
+                name: item.Name || '',
+                email: item.Email || '',
+                phone: item.Phone || '',
+                review: item.Review || '',
+                rating: parseInt(item.Rating) || 0,
+                date: item.Date || ''
+            }));
+            
+            let currentPage = 0;
+            const reviewsPerPage = 6;
+            const totalPages = Math.ceil(reviews.length / reviewsPerPage);
+            
+            function displayReviews() {
+                const start = currentPage * reviewsPerPage;
+                const end = start + reviewsPerPage;
+                const pageReviews = reviews.slice(start, end);
+                
+                reviewsDiv.innerHTML = pageReviews.map(r => `
+                    <div class="review-card">
+                        <div class="review-name">${r.name}</div>
+                        <div class="review-date">${r.date}</div>
+                        <div class="review-text">${r.review}</div>
+                        <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                    </div>
+                `).join('');
+                
+                if (prevBtn && nextBtn) {
+                    prevBtn.disabled = currentPage === 0;
+                    nextBtn.disabled = currentPage >= totalPages - 1;
+                }
+            }
+            
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentPage > 0) {
+                        currentPage--;
+                        displayReviews();
+                    }
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    if (currentPage < totalPages - 1) {
+                        currentPage++;
+                        displayReviews();
+                    }
+                });
+            }
+            
+            displayReviews();
+        })
+        .catch(error => {
+            reviewsDiv.innerHTML = '<p>Unable to load reviews. Please try again later.</p>';
+            console.error('Error loading reviews:', error);
+        });
+}
+
 function updateSeo(page) {
     const baseUrl = "https://www.letmoneyearn.in";
     const config = seoConfig[page];
@@ -783,9 +898,130 @@ function loadPage(page) {
         });
 }
 
+function expandCalculator(calcId) {
+    // Remove the setTimeout wrapper - elements should be available immediately
+    const workspace = document.getElementById('calculator-workspace');
+    const title = document.getElementById('calc-title');
+    const allCalcs = document.querySelectorAll('.collapse-content');
+    
+    console.log('Attempting to expand calculator:', calcId);
+    console.log('Found workspace:', !!workspace);
+    console.log('Found title:', !!title);
+    console.log('Found calculators:', allCalcs.length);
+    
+    if (!workspace || !title) {
+        console.error('Calculator workspace not found! Elements in DOM:', {
+            workspace: workspace,
+            title: title,
+            contentDiv: document.getElementById('content'),
+            allDivs: document.querySelectorAll('div').length
+        });
+        
+        // Try again after a delay
+        setTimeout(() => {
+            console.log('Retrying after delay...');
+            const ws2 = document.getElementById('calculator-workspace');
+            const t2 = document.getElementById('calc-title');
+            console.log('Second attempt - workspace:', !!ws2, 'title:', !!t2);
+            if (ws2 && t2) {
+                expandCalculatorNow(calcId, ws2, t2);
+            }
+        }, 200);
+        return;
+    }
+    
+    expandCalculatorNow(calcId, workspace, title);
+}
+
+function expandCalculatorNow(calcId, workspace, title) {
+    const calcTitles = {
+        'sip-calc': 'SIP Calculator',
+        'lump-calc': 'Lump Sum Calculator',
+        'lumpsip-calc': 'Lump Sum + SIP Calculator',
+        'tax-calc': 'Income Tax Calculator',
+        'cgt-calc': 'Capital Gains Tax Calculator',
+        'retire-calc': 'Retirement Corpus Calculator',
+        'goal-calc': 'Goal-based Investment Calculator',
+        'swp-calc': 'SWP Calculator',
+        'emi-calc': 'EMI Calculator',
+        'emiadd-calc': 'EMI with Additional Payment'
+    };
+    
+    // Hide all calculators
+    const allCalcs = document.querySelectorAll('.collapse-content');
+    allCalcs.forEach(calc => {
+        calc.classList.remove('active');
+        calc.style.display = 'none';
+    });
+    
+    // Show selected calculator
+    const selectedCalc = document.getElementById(calcId);
+    console.log('Found selected calculator:', !!selectedCalc);
+    
+    if (selectedCalc) {
+        selectedCalc.classList.add('active');
+        selectedCalc.style.display = 'block';
+        title.textContent = calcTitles[calcId] || 'Calculator';
+        workspace.style.display = 'block';
+        
+        console.log('Calculator should now be visible');
+        
+        // Initialize calculator handlers
+        setupCalculatorHandlers(calcId);
+        
+        // Scroll to calculator
+        setTimeout(() => {
+            workspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    } else {
+        console.error('Selected calculator element not found:', calcId);
+    }
+}
+
+function setupCalculatorHandlers(calcId) {
+    console.log('Setting up handlers for:', calcId);
+    
+    // Specific setups - no need to reset inputs
+    switch (calcId) {
+        case 'sip-calc':
+            setupSIPCalculator();
+            break;
+        case 'lump-calc':
+            setupLumpCalculator();
+            break;
+        case 'lumpsip-calc':
+            setupLumpSIPCalculator();
+            break;
+        case 'emi-calc':
+            setupEMICalculator();
+            break;
+        case 'emiadd-calc':
+            setupEMIAddCalculator();
+            break;
+        case 'tax-calc':
+            setupTaxCalculator();
+            break;
+        case 'cgt-calc':
+            setupCGTCalculator();
+            break;
+        case 'goal-calc':
+            setupGoalCalculator();
+            break;
+        case 'retire-calc':
+            setupRetireCalculator();
+            break;
+        case 'swp-calc':
+            setupSWPCalculator();
+            break;
+    }
+}
+
+// Expose functions globally
+window.expandCalculator = expandCalculator;
 window.loadPage = loadPage;
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Load home page by default
     loadPage('new-home');
 
     const menuToggle = document.querySelector('.menu-toggle');
