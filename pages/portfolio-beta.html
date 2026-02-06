@@ -1,0 +1,558 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Beta Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 4px 4px 0 0;
+            font-size: 14px;
+        }
+        .tab.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 150px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .remove-btn {
+            background-color: #f44336;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        .remove-btn:hover {
+            background-color: #da190b;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e7f3fe;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+        }
+        .result h2 {
+            margin-top: 0;
+            color: #2196F3;
+        }
+        .result-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2196F3;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .interpretation {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+        }
+        .info-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .info-box strong {
+            color: #856404;
+        }
+        .loading {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        .error {
+            color: #f44336;
+        }
+        .success {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Portfolio Beta Calculator (vs Nifty 50)</h1>
+        
+        <div class="info-box">
+            <strong>Note:</strong> Beta values are fetched from Yahoo Finance. Currency symbols (₹) and commas will be automatically removed from pasted data.
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('manual')">Manual Entry</button>
+            <button class="tab" onclick="switchTab('paste')">Copy & Paste</button>
+        </div>
+        
+        <!-- Manual Entry Tab -->
+        <div id="manual-tab" class="tab-content active">
+            <div class="input-group">
+                <label for="stockSymbol">Stock Symbol (NSE)</label>
+                <input type="text" id="stockSymbol" placeholder="e.g., RELIANCE, TCS, INFY">
+            </div>
+            
+            <div class="input-group">
+                <label for="stockQty">Quantity</label>
+                <input type="number" id="stockQty" step="1" placeholder="e.g., 100">
+            </div>
+            
+            <div class="input-group">
+                <label for="stockInvested">Invested (₹)</label>
+                <input type="number" id="stockInvested" step="0.01" placeholder="e.g., 250000">
+            </div>
+            
+            <div class="input-group">
+                <label for="stockRate">Rate (₹)</label>
+                <input type="number" id="stockRate" step="0.01" placeholder="e.g., 2500">
+            </div>
+            
+            <button onclick="addStock()">Add Stock</button>
+        </div>
+        
+        <!-- Copy & Paste Tab -->
+        <div id="paste-tab" class="tab-content">
+            <div class="info-box">
+                <strong>How to use:</strong> Copy data from Google Sheets or Excel with 4 columns (Script, Qty, Invested, Rate) and paste below.
+                <br><br>
+                <strong>Example format:</strong><br>
+                Script&nbsp;&nbsp;&nbsp;&nbsp;Qty&nbsp;&nbsp;&nbsp;&nbsp;Invested&nbsp;&nbsp;&nbsp;&nbsp;Rate<br>
+                RELIANCE&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;₹250,000.00&nbsp;&nbsp;&nbsp;&nbsp;₹2,500.00<br>
+                TCS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;50&nbsp;&nbsp;&nbsp;&nbsp;₹175,000.00&nbsp;&nbsp;&nbsp;&nbsp;₹3,500.00<br>
+                INFY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;200&nbsp;&nbsp;&nbsp;₹300,000.00&nbsp;&nbsp;&nbsp;&nbsp;₹1,500.00
+            </div>
+            
+            <div class="input-group">
+                <label for="pasteData">Paste Data Here</label>
+                <textarea id="pasteData" placeholder="Paste your data from Google Sheets or Excel here..."></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label for="delimiter">Data Separator</label>
+                <select id="delimiter">
+                    <option value="tab">Tab (from Excel/Sheets)</option>
+                    <option value="comma">Comma (CSV)</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>
+                    <input type="checkbox" id="hasHeaders" checked>
+                    First row contains headers
+                </label>
+            </div>
+            
+            <button onclick="importData()">Import Data</button>
+            <button onclick="clearPasteArea()" style="background-color: #ff9800;">Clear</button>
+        </div>
+        
+        <table id="portfolioTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Script</th>
+                    <th>Qty</th>
+                    <th>Invested (₹)</th>
+                    <th>Rate (₹)</th>
+                    <th>Weight (%)</th>
+                    <th>Beta</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="portfolioBody">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="2">Total</th>
+                    <th id="totalInvested">₹0</th>
+                    <th></th>
+                    <th id="totalWeight">0%</th>
+                    <th colspan="3"></th>
+                </tr>
+            </tfoot>
+        </table>
+        
+        <button onclick="calculateAllBetas()" style="margin-top: 20px;">Fetch Beta Values</button>
+        <button onclick="calculatePortfolioBeta()" style="margin-top: 20px;">Calculate Portfolio Beta</button>
+        <button onclick="clearPortfolio()" style="background-color: #ff9800;">Clear All</button>
+        
+        <div id="result" class="result" style="display:none;">
+            <h2>Portfolio Beta Result</h2>
+            <div class="result-value" id="betaValue">0.00</div>
+            <div class="interpretation" id="interpretation"></div>
+        </div>
+    </div>
+    
+    <script>
+        let portfolio = [];
+        
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+        
+        // Helper function to clean currency strings
+        function cleanCurrencyValue(value) {
+            if (typeof value === 'number') return value;
+            // Remove ₹, commas, spaces, and any other non-numeric characters except decimal point
+            return parseFloat(value.toString().replace(/[₹,\s]/g, ''));
+        }
+        
+        function addStock() {
+            const symbol = document.getElementById('stockSymbol').value.trim().toUpperCase();
+            const qty = parseFloat(document.getElementById('stockQty').value);
+            const invested = parseFloat(document.getElementById('stockInvested').value);
+            const rate = parseFloat(document.getElementById('stockRate').value);
+            
+            if (!symbol || isNaN(qty) || isNaN(invested) || isNaN(rate)) {
+                alert('Please fill all fields correctly');
+                return;
+            }
+            
+            if (qty <= 0 || invested <= 0 || rate <= 0) {
+                alert('All values must be greater than 0');
+                return;
+            }
+            
+            portfolio.push({ 
+                symbol, 
+                qty, 
+                invested, 
+                rate,
+                beta: null,
+                status: 'Pending'
+            });
+            
+            updateTable();
+            
+            // Clear inputs
+            document.getElementById('stockSymbol').value = '';
+            document.getElementById('stockQty').value = '';
+            document.getElementById('stockInvested').value = '';
+            document.getElementById('stockRate').value = '';
+        }
+        
+        function importData() {
+            const pasteData = document.getElementById('pasteData').value.trim();
+            const delimiter = document.getElementById('delimiter').value;
+            const hasHeaders = document.getElementById('hasHeaders').checked;
+            
+            if (!pasteData) {
+                alert('Please paste data first');
+                return;
+            }
+            
+            const lines = pasteData.split('\n').filter(line => line.trim() !== '');
+            const separator = delimiter === 'tab' ? '\t' : ',';
+            
+            let startIndex = hasHeaders ? 1 : 0;
+            let importedCount = 0;
+            let errors = [];
+            
+            for (let i = startIndex; i < lines.length; i++) {
+                const parts = lines[i].split(separator).map(p => p.trim());
+                
+                if (parts.length < 4) {
+                    errors.push(`Row ${i + 1}: Invalid format (expected 4 columns, got ${parts.length})`);
+                    continue;
+                }
+                
+                const symbol = parts[0].toUpperCase();
+                const qty = cleanCurrencyValue(parts[1]);
+                const invested = cleanCurrencyValue(parts[2]);
+                const rate = cleanCurrencyValue(parts[3]);
+                
+                if (!symbol || isNaN(qty) || isNaN(invested) || isNaN(rate)) {
+                    errors.push(`Row ${i + 1}: Invalid data (${symbol}, ${parts[1]}, ${parts[2]}, ${parts[3]})`);
+                    continue;
+                }
+                
+                if (qty <= 0 || invested <= 0 || rate <= 0) {
+                    errors.push(`Row ${i + 1}: All values must be greater than 0`);
+                    continue;
+                }
+                
+                portfolio.push({ 
+                    symbol, 
+                    qty, 
+                    invested, 
+                    rate,
+                    beta: null,
+                    status: 'Pending'
+                });
+                importedCount++;
+            }
+            
+            updateTable();
+            
+            let message = `Successfully imported ${importedCount} stock(s)`;
+            if (errors.length > 0) {
+                message += '\n\nErrors:\n' + errors.join('\n');
+            }
+            
+            alert(message);
+            
+            if (importedCount > 0) {
+                clearPasteArea();
+            }
+        }
+        
+        function clearPasteArea() {
+            document.getElementById('pasteData').value = '';
+        }
+        
+        function updateTable() {
+            const tbody = document.getElementById('portfolioBody');
+            tbody.innerHTML = '';
+            
+            let totalInvested = 0;
+            
+            portfolio.forEach((stock, index) => {
+                totalInvested += stock.invested;
+            });
+            
+            portfolio.forEach((stock, index) => {
+                const weight = totalInvested > 0 ? (stock.invested / totalInvested * 100) : 0;
+                const betaDisplay = stock.beta !== null ? stock.beta.toFixed(4) : '-';
+                const statusClass = stock.status === 'Fetched' ? 'success' : 
+                                   stock.status === 'Error' ? 'error' : 
+                                   stock.status === 'Loading' ? 'loading' : '';
+                
+                const row = `
+                    <tr>
+                        <td>${stock.symbol}</td>
+                        <td>${stock.qty}</td>
+                        <td>₹${stock.invested.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td>₹${stock.rate.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td>${weight.toFixed(2)}%</td>
+                        <td>${betaDisplay}</td>
+                        <td class="${statusClass}">${stock.status}</td>
+                        <td><button class="remove-btn" onclick="removeStock(${index})">Remove</button></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+            
+            document.getElementById('totalInvested').textContent = `₹${totalInvested.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('totalWeight').textContent = '100%';
+            document.getElementById('portfolioTable').style.display = portfolio.length > 0 ? 'table' : 'none';
+        }
+        
+        function removeStock(index) {
+            portfolio.splice(index, 1);
+            updateTable();
+            document.getElementById('result').style.display = 'none';
+        }
+        
+        function clearPortfolio() {
+            if (confirm('Are you sure you want to clear all stocks?')) {
+                portfolio = [];
+                updateTable();
+                document.getElementById('result').style.display = 'none';
+            }
+        }
+        
+        // Fallback beta values for common Indian stocks
+        const fallbackBetas = {
+            'RELIANCE': 1.25, 'TCS': 0.85, 'INFY': 0.90, 'HDFCBANK': 1.10,
+            'ICICIBANK': 1.35, 'HDFC': 1.05, 'SBIN': 1.45, 'BHARTIARTL': 0.95,
+            'ITC': 0.70, 'KOTAKBANK': 1.15, 'LT': 1.20, 'AXISBANK': 1.40,
+            'HINDUNILVR': 0.65, 'ASIANPAINT': 0.80, 'MARUTI': 1.30,
+            'BAJFINANCE': 1.50, 'HCLTECH': 0.88, 'WIPRO': 0.92,
+            'TITAN': 1.10, 'ULTRACEMCO': 1.25, 'NESTLEIND': 0.60,
+            'SUNPHARMA': 0.75, 'POWERGRID': 0.70, 'NTPC': 0.85,
+            'TATASTEEL': 1.55, 'TATAMOTORS': 1.60, 'M&M': 1.35,
+            'TECHM': 0.95, 'ADANIPORTS': 1.40, 'HINDALCO': 1.50,
+            'BEL': 1.15, 'HDFCLIFE': 0.95, 'BAJAJFINSV': 1.45,
+            'TMPV': 1.20, 'ETERNAL': 1.10
+        };
+        
+        // Fetch beta from Yahoo Finance API
+        async function calculateBeta(symbol) {
+            // Try Yahoo Finance API (using yfinance-like endpoint)
+            try {
+                // Yahoo Finance query for NSE stocks
+                const yahooSymbol = `${symbol}.NS`;
+                
+                // Using a CORS proxy for Yahoo Finance
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const apiUrl = `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${yahooSymbol}?modules=defaultKeyStatistics`;
+                
+                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+                const data = await response.json();
+                
+                if (data.quoteSummary && 
+                    data.quoteSummary.result && 
+                    data.quoteSummary.result[0] &&
+                    data.quoteSummary.result[0].defaultKeyStatistics &&
+                    data.quoteSummary.result[0].defaultKeyStatistics.beta) {
+                    
+                    const beta = data.quoteSummary.result[0].defaultKeyStatistics.beta.raw;
+                    if (beta && !isNaN(beta)) {
+                        return beta;
+                    }
+                }
+            } catch (error) {
+                console.log('Yahoo Finance API failed:', error);
+            }
+            
+            // Fallback to known betas or default
+            return fallbackBetas[symbol] || 1.0;
+        }
+        
+        async function calculateAllBetas() {
+            if (portfolio.length === 0) {
+                alert('Please add stocks first');
+                return;
+            }
+            
+            for (let i = 0; i < portfolio.length; i++) {
+                if (portfolio[i].beta === null) {
+                    portfolio[i].status = 'Loading';
+                    updateTable();
+                    
+                    try {
+                        portfolio[i].beta = await calculateBeta(portfolio[i].symbol);
+                        portfolio[i].status = 'Fetched';
+                    } catch (error) {
+                        portfolio[i].status = 'Error';
+                        portfolio[i].beta = fallbackBetas[portfolio[i].symbol] || 1.0;
+                    }
+                    
+                    updateTable();
+                    
+                    // Add delay to avoid rate limiting
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+            }
+            
+            alert('Beta values fetched successfully!');
+        }
+        
+        function calculatePortfolioBeta() {
+            if (portfolio.length === 0) {
+                alert('Please add stocks first');
+                return;
+            }
+            
+            // Check if all betas are fetched
+            const pendingBetas = portfolio.filter(s => s.beta === null);
+            if (pendingBetas.length > 0) {
+                alert('Please fetch beta values first by clicking "Fetch Beta Values"');
+                return;
+            }
+            
+            let totalInvested = portfolio.reduce((sum, stock) => sum + stock.invested, 0);
+            
+            // Calculate weighted beta
+            let portfolioBeta = 0;
+            portfolio.forEach(stock => {
+                const weight = stock.invested / totalInvested;
+                portfolioBeta += stock.beta * weight;
+            });
+            
+            // Display result
+            document.getElementById('betaValue').textContent = portfolioBeta.toFixed(4);
+            document.getElementById('interpretation').innerHTML = getInterpretation(portfolioBeta);
+            document.getElementById('result').style.display = 'block';
+        }
+        
+        function getInterpretation(beta) {
+            let interpretation = '<h3>What does this mean?</h3>';
+            
+            if (beta < 0) {
+                interpretation += '<p><strong>Negative Beta:</strong> Your portfolio moves in the opposite direction to Nifty 50. This is rare but can provide hedging benefits.</p>';
+            } else if (beta >= 0 && beta < 0.8) {
+                interpretation += '<p><strong>Low Beta (Defensive):</strong> Your portfolio is less volatile than Nifty 50. It tends to move less than the market, both up and down.</p>';
+            } else if (beta >= 0.8 && beta <= 1.2) {
+                interpretation += '<p><strong>Moderate Beta:</strong> Your portfolio moves roughly in line with Nifty 50. Beta close to 1 indicates market-like behavior.</p>';
+            } else {
+                interpretation += '<p><strong>High Beta (Aggressive):</strong> Your portfolio is more volatile than Nifty 50. It tends to amplify market movements.</p>';
+            }
+            
+            interpretation += `<p>For every 1% move in Nifty 50, your portfolio is expected to move approximately ${(beta * 1).toFixed(2)}%.</p>`;
+            
+            return interpretation;
+        }
+    </script>
+</body>
+</html>
