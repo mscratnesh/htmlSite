@@ -70,18 +70,18 @@
 .beta-result-box {
     margin-top: 30px;
     padding: 20px;
-    background-color: #e7f3fe;
-    border-left: 4px solid #2196F3;
+    background-color: #e8f5e9;
+    border-left: 4px solid #22b573;
     border-radius: 4px;
 }
 .beta-result-box h2 {
     margin-top: 0;
-    color: #2196F3;
+    color: #22b573;
 }
 .beta-result-value {
     font-size: 36px;
     font-weight: bold;
-    color: #2196F3;
+    color: #22b573;
     text-align: center;
     margin: 20px 0;
 }
@@ -110,6 +110,18 @@
         <span>Portfolio Beta Calculator (vs Nifty 50)</span>
     </h2>
     <div class="card-content">
+        <div class="beta-info-box" style="background: linear-gradient(135deg, #22b573 0%, #1a8f5a 100%); color: white; border: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <div style="flex: 1; min-width: 250px;">
+                    <strong style="font-size: 1.1em;">📚 New to Portfolio Beta?</strong>
+                    <p style="margin: 8px 0 0 0; opacity: 0.95;">Learn how to calculate and use portfolio beta for hedging with our comprehensive guide.</p>
+                </div>
+                <a href="#portfolio-beta-guide" onclick="loadPage('portfolio-beta-guide')" style="background: white; color: #22b573; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                    📖 Read the Guide
+                </a>
+            </div>
+        </div>
+        
         <div class="beta-info-box">
             <strong>Note:</strong> Beta values are fetched from Yahoo Finance. Currency symbols (₹) and commas will be automatically removed from pasted data.
             <br><br>
@@ -176,6 +188,113 @@
             <h2>Portfolio Beta Result</h2>
             <div class="beta-result-value" id="betaValueDisplay">0.00</div>
             <div class="beta-interpretation" id="betaInterpretation"></div>
+            
+            <div style="text-align: center; margin-top: 25px; padding-top: 20px; border-top: 2px solid #22b573;">
+                <p style="margin-bottom: 15px; color: #555;">
+                    <strong>Want to know how to hedge this portfolio?</strong>
+                </p>
+                <a href="#portfolio-beta-guide" onclick="loadPage('portfolio-beta-guide')" style="display: inline-block; background: linear-gradient(135deg, #22b573 0%, #1a8f5a 100%); color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; box-shadow: 0 4px 12px rgba(34, 181, 115, 0.3);">
+                    🛡️ Learn Hedging Strategy
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-section" id="portfolio-beta-guide" style="display:none;">
+    <h2 class="section-header" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5em;">📘</span>
+        <span>Guide: Understanding and Using Portfolio Beta</span>
+    </h2>
+    <div class="card-content">
+        <h3 style="color:#22b573;margin-top:0;">What is Portfolio Beta?</h3>
+        <p style="line-height:1.7;">
+            <strong>Beta</strong> measures how much your portfolio moves relative to the market (Nifty 50 in this case). 
+            It's a statistical measure of volatility and correlation:
+        </p>
+        <ul style="line-height:1.7;margin-bottom:1.5em;">
+            <li><strong>Beta = 1.0:</strong> Portfolio moves exactly with the market</li>
+            <li><strong>Beta > 1.0:</strong> Portfolio is more volatile (amplifies market moves)</li>
+            <li><strong>Beta < 1.0:</strong> Portfolio is less volatile (dampens market moves)</li>
+            <li><strong>Beta = 0:</strong> No correlation with the market</li>
+            <li><strong>Negative Beta:</strong> Moves opposite to the market</li>
+        </ul>
+
+        <h3 style="color:#22b573;">How to Hedge Your Portfolio with Nifty Puts</h3>
+        <p style="line-height:1.7;">
+            Once you know your portfolio beta, you can use <strong>Nifty Put Options</strong> to protect against market downturns:
+        </p>
+
+        <h4 style="color:#333;margin-top:1.5em;">Step-by-Step Hedging Process:</h4>
+        <div style="background:#f5f9ff;padding:15px;border-left:4px solid #2196F3;border-radius:4px;margin:1em 0;">
+            <p style="margin:0 0 0.8em 0;"><strong>Step 1: Calculate Portfolio Value</strong></p>
+            <p style="margin:0 0 0.8em 0;font-family:monospace;background:#fff;padding:10px;border-radius:4px;">
+                Portfolio Value = Total Invested Amount (from calculator above)
+            </p>
+
+            <p style="margin:1.5em 0 0.8em 0;"><strong>Step 2: Calculate Beta-Adjusted Exposure</strong></p>
+            <p style="margin:0 0 0.8em 0;font-family:monospace;background:#fff;padding:10px;border-radius:4px;">
+                Adjusted Exposure = Portfolio Value × Portfolio Beta
+            </p>
+
+            <p style="margin:1.5em 0 0.8em 0;"><strong>Step 3: Calculate Number of Nifty Lots Required</strong></p>
+            <p style="margin:0 0 0.8em 0;font-family:monospace;background:#fff;padding:10px;border-radius:4px;">
+                Number of Lots = Adjusted Exposure ÷ (Nifty Spot × Lot Size)<br>
+                Note: Nifty Lot Size = 50 (as of 2025)
+            </p>
+        </div>
+
+        <h4 style="color:#333;margin-top:1.5em;">Practical Example:</h4>
+        <div style="background:#fff9e6;padding:15px;border-left:4px solid #ff9800;border-radius:4px;margin:1em 0;">
+            <p style="margin:0 0 0.5em 0;"><strong>Scenario:</strong></p>
+            <ul style="margin:0 0 1em 1.5em;line-height:1.7;">
+                <li>Portfolio Value: ₹10,00,000</li>
+                <li>Portfolio Beta: 1.25 (from calculator)</li>
+                <li>Nifty Spot: 23,000</li>
+                <li>Nifty Lot Size: 50</li>
+            </ul>
+            
+            <p style="margin:1em 0 0.5em 0;"><strong>Calculation:</strong></p>
+            <p style="margin:0;font-family:monospace;background:#fff;padding:10px;border-radius:4px;">
+                Adjusted Exposure = ₹10,00,000 × 1.25 = ₹12,50,000<br>
+                Nifty Value per Lot = 23,000 × 50 = ₹11,50,000<br>
+                <strong>Lots Required = ₹12,50,000 ÷ ₹11,50,000 ≈ 1.09 lots</strong><br>
+                <br>
+                <strong style="color:#22b573;">Action: Buy 1 Nifty Put Option</strong>
+            </p>
+        </div>
+
+        <h4 style="color:#333;margin-top:1.5em;">Key Considerations:</h4>
+        <ul style="line-height:1.7;margin-bottom:1em;">
+            <li><strong>Strike Selection:</strong> Choose At-The-Money (ATM) or slightly Out-of-The-Money (OTM) puts</li>
+            <li><strong>Expiry:</strong> Select 1-3 months for better cost-effectiveness</li>
+            <li><strong>Cost:</strong> Put option premium is the cost of insurance (typically 1-3% of portfolio value)</li>
+            <li><strong>Rolling:</strong> Roll over positions before expiry to maintain hedge</li>
+            <li><strong>Dynamic Hedging:</strong> Adjust hedge if portfolio composition or beta changes significantly</li>
+        </ul>
+
+        <h4 style="color:#333;margin-top:1.5em;">Benefits of Beta-Based Hedging:</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:1em 0;">
+            <div style="background:#e8f5e9;padding:12px;border-radius:6px;">
+                <strong style="color:#2e7d32;">✓ Precise Protection</strong><br>
+                <span style="font-size:0.95em;">Matches your portfolio's actual market exposure</span>
+            </div>
+            <div style="background:#e8f5e9;padding:12px;border-radius:6px;">
+                <strong style="color:#2e7d32;">✓ Cost Efficient</strong><br>
+                <span style="font-size:0.95em;">Only pay for the protection you need</span>
+            </div>
+            <div style="background:#e8f5e9;padding:12px;border-radius:6px;">
+                <strong style="color:#2e7d32;">✓ Portfolio Stability</strong><br>
+                <span style="font-size:0.95em;">Reduces downside volatility during corrections</span>
+            </div>
+            <div style="background:#e8f5e9;padding:12px;border-radius:6px;">
+                <strong style="color:#2e7d32;">✓ Peace of Mind</strong><br>
+                <span style="font-size:0.95em;">Sleep better during volatile markets</span>
+            </div>
+        </div>
+
+        <div style="background:#ffebee;padding:15px;border-left:4px solid #f44336;border-radius:4px;margin:1.5em 0;">
+            <p style="margin:0;"><strong>⚠️ Important Note:</strong> This is for educational purposes. Always consult a SEBI-registered advisor before implementing hedging strategies. Past performance doesn't guarantee future results.</p>
         </div>
     </div>
 </div>
@@ -218,190 +337,4 @@ window.importBetaData = function() {
         const symbol = parts[0].toUpperCase();
         const invested = window.cleanCurrencyValue(parts[1]);
         
-        if (!symbol || isNaN(invested) || invested <= 0) {
-            errors.push(`Row ${i + 1}: Invalid data (${symbol}, ${parts[1]})`);
-            continue;
-        }
-        
-        window.betaPortfolio.push({ symbol, invested, beta: null, status: 'Pending' });
-        importedCount++;
-    }
-    
-    window.updateBetaTable();
-    
-    let message = `Successfully imported ${importedCount} stock(s)`;
-    if (errors.length > 0 && errors.length <= 5) {
-        message += '\n\nErrors:\n' + errors.join('\n');
-    } else if (errors.length > 5) {
-        message += `\n\n${errors.length} rows had errors. Please check your data format.`;
-    }
-    
-    alert(message);
-    if (importedCount > 0) window.clearBetaPasteArea();
-};
-
-window.clearBetaPasteArea = function() {
-    document.getElementById('betaPasteData').value = '';
-};
-
-window.updateBetaTable = function() {
-    const tbody = document.getElementById('betaPortfolioBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    
-    let totalInvested = window.betaPortfolio.reduce((sum, stock) => sum + stock.invested, 0);
-    
-    window.betaPortfolio.forEach((stock, index) => {
-        const weight = totalInvested > 0 ? (stock.invested / totalInvested * 100) : 0;
-        const betaDisplay = stock.beta !== null ? stock.beta.toFixed(4) : '-';
-        const statusClass = stock.status === 'Fetched' ? 'beta-success' : 
-                           stock.status === 'Error' ? 'beta-error' : 
-                           stock.status === 'Loading' ? 'beta-loading' : '';
-        
-        tbody.innerHTML += `
-            <tr>
-                <td>${stock.symbol}</td>
-                <td>₹${stock.invested.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                <td>${weight.toFixed(2)}%</td>
-                <td>${betaDisplay}</td>
-                <td class="${statusClass}">${stock.status}</td>
-                <td><button class="beta-btn-remove" onclick="window.removeBetaStock(${index})">Remove</button></td>
-            </tr>
-        `;
-    });
-    
-    const totalInvestedEl = document.getElementById('betaTotalInvested');
-    if (totalInvestedEl) {
-        totalInvestedEl.textContent = `₹${totalInvested.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-    }
-    
-    const tableEl = document.getElementById('betaPortfolioTable');
-    if (tableEl) {
-        tableEl.style.display = window.betaPortfolio.length > 0 ? 'table' : 'none';
-    }
-};
-
-window.removeBetaStock = function(index) {
-    window.betaPortfolio.splice(index, 1);
-    window.updateBetaTable();
-    const resultBox = document.getElementById('betaResultBox');
-    if (resultBox) resultBox.style.display = 'none';
-};
-
-window.clearBetaPortfolio = function() {
-    if (confirm('Are you sure you want to clear all stocks?')) {
-        window.betaPortfolio = [];
-        window.updateBetaTable();
-        const resultBox = document.getElementById('betaResultBox');
-        if (resultBox) resultBox.style.display = 'none';
-    }
-};
-
-const fallbackBetas = {
-    'RELIANCE': 1.25, 'TCS': 0.85, 'INFY': 0.90, 'HDFCBANK': 1.10,
-    'ICICIBANK': 1.35, 'HDFC': 1.05, 'SBIN': 1.45, 'BHARTIARTL': 0.95,
-    'ITC': 0.70, 'KOTAKBANK': 1.15, 'LT': 1.20, 'AXISBANK': 1.40,
-    'HINDUNILVR': 0.65, 'ASIANPAINT': 0.80, 'MARUTI': 1.30,
-    'BAJFINANCE': 1.50, 'HCLTECH': 0.88, 'WIPRO': 0.92,
-    'TITAN': 1.10, 'ULTRACEMCO': 1.25, 'NESTLEIND': 0.60,
-    'SUNPHARMA': 0.75, 'POWERGRID': 0.70, 'NTPC': 0.85,
-    'TATASTEEL': 1.55, 'TATAMOTORS': 1.60, 'M&M': 1.35,
-    'TECHM': 0.95, 'ADANIPORTS': 1.40, 'HINDALCO': 1.50
-};
-
-async function calculateBeta(symbol) {
-    try {
-        const yahooSymbol = `${symbol}.NS`;
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        const apiUrl = `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${yahooSymbol}?modules=defaultKeyStatistics`;
-        
-        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
-        const data = await response.json();
-        
-        if (data.quoteSummary?.result?.[0]?.defaultKeyStatistics?.beta) {
-            const beta = data.quoteSummary.result[0].defaultKeyStatistics.beta.raw;
-            if (beta && !isNaN(beta)) return beta;
-        }
-    } catch (error) {
-        console.log('Yahoo Finance API failed:', error);
-    }
-    
-    return fallbackBetas[symbol] || 1.0;
-}
-
-window.calculateAllBetas = async function() {
-    if (window.betaPortfolio.length === 0) {
-        alert('Please add stocks first');
-        return;
-    }
-    
-    for (let i = 0; i < window.betaPortfolio.length; i++) {
-        if (window.betaPortfolio[i].beta === null) {
-            window.betaPortfolio[i].status = 'Loading';
-            window.updateBetaTable();
-            
-            try {
-                window.betaPortfolio[i].beta = await calculateBeta(window.betaPortfolio[i].symbol);
-                window.betaPortfolio[i].status = 'Fetched';
-            } catch (error) {
-                window.betaPortfolio[i].status = 'Error';
-                window.betaPortfolio[i].beta = fallbackBetas[window.betaPortfolio[i].symbol] || 1.0;
-            }
-            
-            window.updateBetaTable();
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-    }
-    
-    alert('Beta values fetched successfully!');
-};
-
-window.calculatePortfolioBeta = function() {
-    if (window.betaPortfolio.length === 0) {
-        alert('Please add stocks first');
-        return;
-    }
-    
-    const pendingBetas = window.betaPortfolio.filter(s => s.beta === null);
-    if (pendingBetas.length > 0) {
-        alert('Please fetch beta values first by clicking "Fetch Beta Values"');
-        return;
-    }
-    
-    let totalInvested = window.betaPortfolio.reduce((sum, stock) => sum + stock.invested, 0);
-    let portfolioBeta = 0;
-    window.betaPortfolio.forEach(stock => {
-        const weight = stock.invested / totalInvested;
-        portfolioBeta += stock.beta * weight;
-    });
-    
-    const valueDisplay = document.getElementById('betaValueDisplay');
-    const interpretation = document.getElementById('betaInterpretation');
-    const resultBox = document.getElementById('betaResultBox');
-    
-    if (valueDisplay) valueDisplay.textContent = portfolioBeta.toFixed(4);
-    if (interpretation) interpretation.innerHTML = getBetaInterpretation(portfolioBeta);
-    if (resultBox) resultBox.style.display = 'block';
-};
-
-function getBetaInterpretation(beta) {
-    let interpretation = '<h3>What does this mean?</h3>';
-    
-    if (beta < 0) {
-        interpretation += '<p><strong>Negative Beta:</strong> Your portfolio moves in the opposite direction to Nifty 50.</p>';
-    } else if (beta >= 0 && beta < 0.8) {
-        interpretation += '<p><strong>Low Beta (Defensive):</strong> Your portfolio is less volatile than Nifty 50.</p>';
-    } else if (beta >= 0.8 && beta <= 1.2) {
-        interpretation += '<p><strong>Moderate Beta:</strong> Your portfolio moves roughly in line with Nifty 50.</p>';
-    } else {
-        interpretation += '<p><strong>High Beta (Aggressive):</strong> Your portfolio is more volatile than Nifty 50.</p>';
-    }
-    
-    interpretation += `<p>For every 1% move in Nifty 50, your portfolio is expected to move approximately ${(beta * 1).toFixed(2)}%.</p>`;
-    return interpretation;
-}
-
-// Log to confirm functions are loaded
-console.log('Portfolio Beta Calculator functions loaded');
-</script>
+        if (!symbol |
