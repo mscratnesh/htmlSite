@@ -1072,7 +1072,6 @@ function handleHashNavigation() {
         // Map of hash routes to page names
         const routes = {
             'portfolio-beta': 'portfolio-beta',
-            'portfolio-beta-guide': 'portfolio-beta-guide',
             'calculators': 'calculators',
             'about': 'about',
             'home': 'new-home',
