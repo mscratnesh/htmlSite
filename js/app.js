@@ -1065,9 +1065,32 @@ function setupCalculatorHandlers(calcId) {
 window.expandCalculator = expandCalculator;
 window.loadPage = loadPage;
 
+// Handle hash navigation for direct links
+function handleHashNavigation() {
+    const hash = window.location.hash.substring(1); // Remove the # symbol
+    if (hash) {
+        // Map of hash routes to page names
+        const routes = {
+            'portfolio-beta': 'portfolio-beta',
+            'calculators': 'calculators',
+            'about': 'about',
+            'home': 'new-home',
+            // Add more routes as needed
+        };
+        
+        const page = routes[hash] || 'new-home';
+        loadPage(page);
+    } else {
+        loadPage('new-home');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Load home page by default
-    loadPage('new-home');
+    // Handle initial hash or load home page
+    handleHashNavigation();
+    
+    // Listen for hash changes (back/forward buttons)
+    window.addEventListener('hashchange', handleHashNavigation);
 
     const menuToggle = document.querySelector('.menu-toggle');
     const topnav = document.querySelector('.topnav');

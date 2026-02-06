@@ -2,30 +2,6 @@
 <h1 class="page-title">Portfolio Beta Calculator</h1>
 
 <style>
-.beta-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ddd;
-}
-.beta-tab {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 4px 4px 0 0;
-    font-size: 14px;
-}
-.beta-tab.active {
-    background-color: #22b573;
-    color: white;
-}
-.beta-tab-content {
-    display: none;
-}
-.beta-tab-content.active {
-    display: block;
-}
 .beta-input-group {
     margin-bottom: 15px;
 }
@@ -136,75 +112,44 @@
     <div class="card-content">
         <div class="beta-info-box">
             <strong>Note:</strong> Beta values are fetched from Yahoo Finance. Currency symbols (₹) and commas will be automatically removed from pasted data.
+            <br><br>
+            <strong>How to use:</strong> Copy data from Google Sheets or Excel with 2 columns (Script, Invested) and paste below.
+            <br><br>
+            <strong>Example format:</strong><br>
+            Script&nbsp;&nbsp;&nbsp;&nbsp;Invested<br>
+            RELIANCE&nbsp;&nbsp;₹250,000<br>
+            TCS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;₹175,000<br>
+            INFY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;₹300,000
         </div>
         
-        <div class="beta-tabs">
-            <button class="beta-tab active" onclick="window.switchBetaTab('manual')">Manual Entry</button>
-            <button class="beta-tab" onclick="window.switchBetaTab('paste')">Copy & Paste</button>
+        <div class="beta-input-group">
+            <label for="betaPasteData">Paste Data Here</label>
+            <textarea id="betaPasteData" placeholder="Paste your data from Google Sheets or Excel here..."></textarea>
         </div>
         
-        <!-- Manual Entry Tab -->
-        <div id="beta-manual-tab" class="beta-tab-content active">
-            <div class="beta-input-group">
-                <label for="betaStockSymbol">Stock Symbol (NSE)</label>
-                <input type="text" id="betaStockSymbol" placeholder="e.g., RELIANCE, TCS, INFY">
-            </div>
-            
-            <div class="beta-input-group">
-                <label for="betaStockQty">Quantity</label>
-                <input type="number" id="betaStockQty" step="1" placeholder="e.g., 100">
-            </div>
-            
-            <div class="beta-input-group">
-                <label for="betaStockInvested">Invested (₹)</label>
-                <input type="number" id="betaStockInvested" step="0.01" placeholder="e.g., 250000">
-            </div>
-            
-            <div class="beta-input-group">
-                <label for="betaStockRate">Rate (₹)</label>
-                <input type="number" id="betaStockRate" step="0.01" placeholder="e.g., 2500">
-            </div>
-            
-            <button class="beta-btn-primary" onclick="window.addBetaStock()">Add Stock</button>
+        <div class="beta-input-group">
+            <label for="betaDelimiter">Data Separator</label>
+            <select id="betaDelimiter">
+                <option value="tab">Tab (from Excel/Sheets)</option>
+                <option value="comma">Comma (CSV)</option>
+            </select>
         </div>
         
-        <!-- Copy & Paste Tab -->
-        <div id="beta-paste-tab" class="beta-tab-content">
-            <div class="beta-info-box">
-                <strong>How to use:</strong> Copy data from Google Sheets or Excel with 4 columns (Script, Qty, Invested, Rate) and paste below.
-            </div>
-            
-            <div class="beta-input-group">
-                <label for="betaPasteData">Paste Data Here</label>
-                <textarea id="betaPasteData" placeholder="Paste your data from Google Sheets or Excel here..."></textarea>
-            </div>
-            
-            <div class="beta-input-group">
-                <label for="betaDelimiter">Data Separator</label>
-                <select id="betaDelimiter">
-                    <option value="tab">Tab (from Excel/Sheets)</option>
-                    <option value="comma">Comma (CSV)</option>
-                </select>
-            </div>
-            
-            <div class="beta-input-group">
-                <label>
-                    <input type="checkbox" id="betaHasHeaders" checked>
-                    First row contains headers
-                </label>
-            </div>
-            
-            <button class="beta-btn-primary" onclick="window.importBetaData()">Import Data</button>
-            <button class="beta-btn-secondary" onclick="window.clearBetaPasteArea()">Clear</button>
+        <div class="beta-input-group">
+            <label>
+                <input type="checkbox" id="betaHasHeaders" checked>
+                First row contains headers
+            </label>
         </div>
+        
+        <button class="beta-btn-primary" onclick="window.importBetaData()">Import Data</button>
+        <button class="beta-btn-secondary" onclick="window.clearBetaPasteArea()">Clear</button>
         
         <table class="beta-portfolio-table" id="betaPortfolioTable" style="display:none;">
             <thead>
                 <tr>
                     <th>Script</th>
-                    <th>Qty</th>
                     <th>Invested (₹)</th>
-                    <th>Rate (₹)</th>
                     <th>Weight (%)</th>
                     <th>Beta</th>
                     <th>Status</th>
@@ -215,10 +160,9 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="2">Total</th>
+                    <th>Total</th>
                     <th id="betaTotalInvested">₹0</th>
-                    <th></th>
-                    <th id="betaTotalWeight">0%</th>
+                    <th id="betaTotalWeight">100%</th>
                     <th colspan="3"></th>
                 </tr>
             </tfoot>
@@ -242,41 +186,9 @@ if (!window.betaPortfolio) {
     window.betaPortfolio = [];
 }
 
-window.switchBetaTab = function(tabName) {
-    document.querySelectorAll('.beta-tab').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.beta-tab-content').forEach(content => content.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById('beta-' + tabName + '-tab').classList.add('active');
-};
-
 window.cleanCurrencyValue = function(value) {
     if (typeof value === 'number') return value;
     return parseFloat(value.toString().replace(/[₹,\s]/g, ''));
-};
-
-window.addBetaStock = function() {
-    const symbol = document.getElementById('betaStockSymbol').value.trim().toUpperCase();
-    const qty = parseFloat(document.getElementById('betaStockQty').value);
-    const invested = parseFloat(document.getElementById('betaStockInvested').value);
-    const rate = parseFloat(document.getElementById('betaStockRate').value);
-    
-    if (!symbol || isNaN(qty) || isNaN(invested) || isNaN(rate)) {
-        alert('Please fill all fields correctly');
-        return;
-    }
-    
-    if (qty <= 0 || invested <= 0 || rate <= 0) {
-        alert('All values must be greater than 0');
-        return;
-    }
-    
-    window.betaPortfolio.push({ symbol, qty, invested, rate, beta: null, status: 'Pending' });
-    window.updateBetaTable();
-    
-    document.getElementById('betaStockSymbol').value = '';
-    document.getElementById('betaStockQty').value = '';
-    document.getElementById('betaStockInvested').value = '';
-    document.getElementById('betaStockRate').value = '';
 };
 
 window.importBetaData = function() {
@@ -293,24 +205,38 @@ window.importBetaData = function() {
     const separator = delimiter === 'tab' ? '\t' : ',';
     let startIndex = hasHeaders ? 1 : 0;
     let importedCount = 0;
+    let errors = [];
     
     for (let i = startIndex; i < lines.length; i++) {
         const parts = lines[i].split(separator).map(p => p.trim());
-        if (parts.length < 4) continue;
+        
+        if (parts.length < 2) {
+            errors.push(`Row ${i + 1}: Invalid format (expected 2 columns, got ${parts.length})`);
+            continue;
+        }
         
         const symbol = parts[0].toUpperCase();
-        const qty = window.cleanCurrencyValue(parts[1]);
-        const invested = window.cleanCurrencyValue(parts[2]);
-        const rate = window.cleanCurrencyValue(parts[3]);
+        const invested = window.cleanCurrencyValue(parts[1]);
         
-        if (symbol && !isNaN(qty) && !isNaN(invested) && !isNaN(rate) && qty > 0 && invested > 0 && rate > 0) {
-            window.betaPortfolio.push({ symbol, qty, invested, rate, beta: null, status: 'Pending' });
-            importedCount++;
+        if (!symbol || isNaN(invested) || invested <= 0) {
+            errors.push(`Row ${i + 1}: Invalid data (${symbol}, ${parts[1]})`);
+            continue;
         }
+        
+        window.betaPortfolio.push({ symbol, invested, beta: null, status: 'Pending' });
+        importedCount++;
     }
     
     window.updateBetaTable();
-    alert(`Successfully imported ${importedCount} stock(s)`);
+    
+    let message = `Successfully imported ${importedCount} stock(s)`;
+    if (errors.length > 0 && errors.length <= 5) {
+        message += '\n\nErrors:\n' + errors.join('\n');
+    } else if (errors.length > 5) {
+        message += `\n\n${errors.length} rows had errors. Please check your data format.`;
+    }
+    
+    alert(message);
     if (importedCount > 0) window.clearBetaPasteArea();
 };
 
@@ -336,9 +262,7 @@ window.updateBetaTable = function() {
         tbody.innerHTML += `
             <tr>
                 <td>${stock.symbol}</td>
-                <td>${stock.qty}</td>
-                <td>₹${stock.invested.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-                <td>₹${stock.rate.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                <td>₹${stock.invested.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                 <td>${weight.toFixed(2)}%</td>
                 <td>${betaDisplay}</td>
                 <td class="${statusClass}">${stock.status}</td>
@@ -349,7 +273,7 @@ window.updateBetaTable = function() {
     
     const totalInvestedEl = document.getElementById('betaTotalInvested');
     if (totalInvestedEl) {
-        totalInvestedEl.textContent = `₹${totalInvested.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+        totalInvestedEl.textContent = `₹${totalInvested.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
     }
     
     const tableEl = document.getElementById('betaPortfolioTable');
