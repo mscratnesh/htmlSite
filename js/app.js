@@ -297,6 +297,38 @@ const seoConfig = {
             "name": "Reviews",
             "url": "https://www.letmoneyearn.in/pages/review.html"
         }
+    },
+    "portfolio-beta": {
+        title: "Portfolio Beta Calculator | Let Money Earn",
+        description: "Calculate your portfolio beta vs Nifty 50. Understand your portfolio's volatility and risk relative to the market index.",
+        jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Portfolio Beta Calculator",
+            "description": "Calculate portfolio beta relative to Nifty 50 index",
+            "applicationCategory": "FinanceApplication",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "INR"
+            },
+            "provider": {
+                "@type": "Organization",
+                "name": "Let Money Earn",
+                "url": "https://www.letmoneyearn.in/"
+            }
+        }
+    },
+    "calculators": {
+        title: "Financial Calculators | Let Money Earn",
+        description: "Interactive SIP, lump sum, tax, and retirement calculators.",
+        jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Financial Calculators",
+            "description": "Collection of financial planning calculators",
+            "applicationCategory": "FinanceApplication"
+        }
     }
 };
 
@@ -884,8 +916,21 @@ function loadPage(page) {
     fetch(`pages/${page}.html`)
         .then(res => res.text())
         .then(data => {
-            document.getElementById("content").innerHTML = data;
+            const contentDiv = document.getElementById("content");
+            contentDiv.innerHTML = data;
             updateSeo(page);
+            
+            // Execute any scripts in the loaded content
+            const scripts = contentDiv.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                Array.from(oldScript.attributes).forEach(attr => {
+                    newScript.setAttribute(attr.name, attr.value);
+                });
+                newScript.textContent = oldScript.textContent;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+            
             if (page === 'review') {
                 setupReviewForm();
             }
