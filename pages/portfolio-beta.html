@@ -4,30 +4,6 @@
         padding: 20px;
         border-radius: 8px;
     }
-    .beta-tabs {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-        border-bottom: 2px solid #ddd;
-    }
-    .beta-tab {
-        padding: 10px 20px;
-        cursor: pointer;
-        background-color: #f0f0f0;
-        border: none;
-        border-radius: 4px 4px 0 0;
-        font-size: 14px;
-    }
-    .beta-tab.active {
-        background-color: #22b573;
-        color: white;
-    }
-    .beta-tab-content {
-        display: none;
-    }
-    .beta-tab-content.active {
-        display: block;
-    }
     .beta-input-group {
         margin-bottom: 15px;
     }
@@ -133,83 +109,38 @@
                 <strong>Note:</strong> Beta values are fetched from Yahoo Finance. Currency symbols (₹) and commas will be automatically removed from pasted data.
             </div>
             
-            <div class="beta-tabs">
-                <button class="beta-tab active" onclick="switchBetaTab('manual')">Manual Entry</button>
-                <button class="beta-tab" onclick="switchBetaTab('paste')">Copy & Paste</button>
-                <button class="beta-tab" onclick="switchBetaTab('sheetdb')">Load from SheetDB</button>
+            <div class="beta-info-box">
+                <strong>How to use:</strong> Copy data from Google Sheets or Excel with 2 columns (Script, Invested) and paste below.
+                <br><br>
+                <strong>Example:</strong><br>
+                Script&nbsp;&nbsp;&nbsp;&nbsp;Invested<br>
+                RELIANCE&nbsp;&nbsp;₹615,101.00<br>
+                TCS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;₹546,381.16<br>
+                INFY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;₹300,000.00
             </div>
             
-            <!-- Manual Entry Tab -->
-            <div id="manual-tab" class="beta-tab-content active">
-                <div class="beta-input-group">
-                    <label for="betaStockSymbol">Stock Symbol (NSE)</label>
-                    <input type="text" id="betaStockSymbol" placeholder="e.g., RELIANCE, TCS, INFY">
-                </div>
-                
-                <div class="beta-input-group">
-                    <label for="betaStockInvested">Invested (₹)</label>
-                    <input type="number" id="betaStockInvested" step="0.01" placeholder="e.g., 250000">
-                </div>
-                
-                <button class="beta-button" onclick="addBetaStock()">Add Stock</button>
+            <div class="beta-input-group">
+                <label for="betaPasteData">Paste Data Here</label>
+                <textarea id="betaPasteData" placeholder="Paste your data from Google Sheets or Excel here..."></textarea>
             </div>
             
-            <!-- Copy & Paste Tab -->
-            <div id="paste-tab" class="beta-tab-content">
-                <div class="beta-info-box">
-                    <strong>How to use:</strong> Copy data from Google Sheets or Excel with 2 columns (Script, Invested) and paste below.
-                    <br><br>
-                    <strong>Example:</strong><br>
-                    Script&nbsp;&nbsp;&nbsp;&nbsp;Invested<br>
-                    RELIANCE&nbsp;&nbsp;₹615,101.00<br>
-                    TCS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;₹546,381.16<br>
-                    INFY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;₹300,000.00
-                </div>
-                
-                <div class="beta-input-group">
-                    <label for="betaPasteData">Paste Data Here</label>
-                    <textarea id="betaPasteData" placeholder="Paste your data from Google Sheets or Excel here..."></textarea>
-                </div>
-                
-                <div class="beta-input-group">
-                    <label for="betaDelimiter">Data Separator</label>
-                    <select id="betaDelimiter">
-                        <option value="tab">Tab (from Excel/Sheets)</option>
-                        <option value="comma">Comma (CSV)</option>
-                    </select>
-                </div>
-                
-                <div class="beta-input-group">
-                    <label>
-                        <input type="checkbox" id="betaHasHeaders" checked>
-                        First row contains headers
-                    </label>
-                </div>
-                
-                <button class="beta-button" onclick="importBetaData()">Import Data</button>
-                <button class="beta-button beta-button-secondary" onclick="clearBetaPasteArea()">Clear</button>
+            <div class="beta-input-group">
+                <label for="betaDelimiter">Data Separator</label>
+                <select id="betaDelimiter">
+                    <option value="tab">Tab (from Excel/Sheets)</option>
+                    <option value="comma">Comma (CSV)</option>
+                </select>
             </div>
             
-            <!-- SheetDB Tab -->
-            <div id="sheetdb-tab" class="beta-tab-content">
-                <div class="beta-info-box">
-                    <strong>How to use:</strong> Click the button below to fetch your portfolio data directly from your Google Sheet via SheetDB API.
-                    <br><br>
-                    <strong>Expected Sheet Format:</strong><br>
-                    Columns: <code>Script</code>, <code>Invested</code><br>
-                    Example: RELIANCE, 615101.00
-                </div>
-                
-                <div class="beta-input-group">
-                    <label for="sheetdbApiUrl">SheetDB API URL (Optional - uses default if empty)</label>
-                    <input type="text" id="sheetdbApiUrl" placeholder="https://sheetdb.io/api/v1/your_sheet_id" value="https://sheetdb.io/api/v1/c9doyjtkjcurf">
-                </div>
-                
-                <button class="beta-button" onclick="loadFromSheetDB()">Load from SheetDB</button>
-                <button class="beta-button beta-button-secondary" onclick="clearSheetDBUrl()">Reset URL</button>
-                
-                <div id="sheetdbStatus" style="margin-top: 15px; font-weight: bold;"></div>
+            <div class="beta-input-group">
+                <label>
+                    <input type="checkbox" id="betaHasHeaders" checked>
+                    First row contains headers
+                </label>
             </div>
+            
+            <button class="beta-button" onclick="importBetaData()">Import Data</button>
+            <button class="beta-button beta-button-secondary" onclick="clearBetaPasteArea()">Clear</button>
             
             <table class="beta-table" id="betaPortfolioTable" style="display:none;">
                 <thead>
@@ -250,33 +181,9 @@
     // Portfolio Beta Calculator
     window.betaPortfolio = window.betaPortfolio || [];
     
-    const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/c9doyjtkjcurf';
-    
-    function switchBetaTab(tabName) {
-        document.querySelectorAll('.beta-tab').forEach(tab => tab.classList.remove('active'));
-        document.querySelectorAll('.beta-tab-content').forEach(content => content.classList.remove('active'));
-        event.target.classList.add('active');
-        document.getElementById(tabName + '-tab').classList.add('active');
-    }
-    
     function cleanBetaCurrencyValue(value) {
         if (typeof value === 'number') return value;
         return parseFloat(value.toString().replace(/[₹,\s]/g, ''));
-    }
-    
-    function addBetaStock() {
-        const symbol = document.getElementById('betaStockSymbol').value.trim().toUpperCase();
-        const invested = parseFloat(document.getElementById('betaStockInvested').value);
-        
-        if (!symbol || isNaN(invested) || invested <= 0) {
-            alert('Please fill all fields correctly with invested amount > 0');
-            return;
-        }
-        
-        window.betaPortfolio.push({ symbol, invested, beta: null, status: 'Pending' });
-        updateBetaTable();
-        document.getElementById('betaStockSymbol').value = '';
-        document.getElementById('betaStockInvested').value = '';
     }
     
     function importBetaData() {
@@ -317,67 +224,6 @@
     
     function clearBetaPasteArea() {
         document.getElementById('betaPasteData').value = '';
-    }
-    
-    function clearSheetDBUrl() {
-        document.getElementById('sheetdbApiUrl').value = SHEETDB_API_URL;
-        document.getElementById('sheetdbStatus').textContent = '';
-    }
-    
-    async function loadFromSheetDB() {
-        const apiUrl = document.getElementById('sheetdbApiUrl').value.trim() || SHEETDB_API_URL;
-        const statusDiv = document.getElementById('sheetdbStatus');
-        
-        statusDiv.innerHTML = '<span class="beta-loading">⏳ Loading data from SheetDB...</span>';
-        
-        try {
-            const response = await fetch(apiUrl);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            
-            if (!Array.isArray(data) || data.length === 0) {
-                statusDiv.innerHTML = '<span class="beta-error">❌ No data found in the sheet</span>';
-                return;
-            }
-            
-            window.betaPortfolio = [];
-            let importedCount = 0;
-            let skipped = [];
-            
-            data.forEach(row => {
-                const symbol = (row.Script || row.script || row.SCRIPT || '').toString().trim().toUpperCase();
-                const investedValue = row.Invested || row.invested || row.INVESTED || 0;
-                const invested = cleanBetaCurrencyValue(investedValue);
-                
-                if (symbol && invested > 0 && !isNaN(invested)) {
-                    window.betaPortfolio.push({ 
-                        symbol, 
-                        invested, 
-                        beta: null, 
-                        status: 'Pending' 
-                    });
-                    importedCount++;
-                } else if (symbol) {
-                    skipped.push(symbol);
-                }
-            });
-            
-            updateBetaTable();
-            
-            let message = `✅ Successfully loaded ${importedCount} stock(s) from SheetDB`;
-            if (skipped.length > 0) {
-                message += `<br>⚠️ Skipped ${skipped.length} invalid entries: ${skipped.join(', ')}`;
-            }
-            statusDiv.innerHTML = `<span class="beta-success">${message}</span>`;
-            
-        } catch (error) {
-            console.error('SheetDB fetch error:', error);
-            statusDiv.innerHTML = `<span class="beta-error">❌ Error loading data: ${error.message}</span>`;
-        }
     }
     
     function updateBetaTable() {
