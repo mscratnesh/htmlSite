@@ -319,6 +319,17 @@ const seoConfig = {
             }
         }
     },
+    "options-instagram-posts": {
+        title: "Options Strategy Instagram Cards | Let Money Earn",
+        description: "Download Instagram-ready PNG cards (1080x1080) illustrating popular options trading strategies in Hindi. Free resources from Let Money Earn.",
+        jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "name": "Options Strategy Instagram Cards",
+            "description": "A set of Instagram-ready cards illustrating options trading strategies in Hindi.",
+            "inLanguage": "hi"
+        }
+    },
     "calculators": {
         title: "Financial Calculators | Let Money Earn",
         description: "Interactive SIP, lump sum, tax, and retirement calculators.",
