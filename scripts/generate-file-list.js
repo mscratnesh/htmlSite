@@ -2,7 +2,8 @@
 // Generates files/list.json by scanning the `files` directory.
 // Run: `node scripts/generate-file-list.js`
 
-const fs = require('fs').promises;
+const fs = require('fs');
+const fsp = fs.promises;
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..', 'files');
@@ -43,9 +44,9 @@ async function walk(dir, base=""){
   return files;
 }
 
-(async ()=>{
+async function generate() {
   try{
-    await fs.access(ROOT);
+    await fsp.access(ROOT);
   }catch(e){
     console.error('Files folder not found at', ROOT);
     process.exit(1);
@@ -66,16 +67,44 @@ async function walk(dir, base=""){
 
     const out = items.map(it=>({
       name: prettifyName(it.name),
-      path: '/files/' + encodeURI(it.rel),
+      // use relative path (no leading slash) so list works on sites hosted under a subpath
+      path: 'files/' + encodeURI(it.rel),
       type: path.extname(it.name).replace('.', '').toUpperCase() || '',
       size: humanFileSize(it.size),
       desc: ''
     }));
     const json = { files: out };
-    await fs.writeFile(OUT, JSON.stringify(json, null, 2), 'utf8');
+    await fsp.writeFile(OUT, JSON.stringify(json, null, 2), 'utf8');
     console.log('Wrote', OUT, 'with', out.length, 'entries');
   }catch(err){
     console.error(err);
+    // do not exit when watching
+    if(!process.argv.includes('--watch')) process.exit(1);
+  }
+}
+
+// If run with --watch, watch the files directory and regenerate on changes
+if(process.argv.includes('--watch')){
+  // initial run
+  generate();
+  console.log('Watching', ROOT, 'for changes...');
+  let timer = null;
+  try{
+    const watcher = fs.watch(ROOT, { recursive: true }, (eventType, filename) => {
+      if(!filename) return;
+      // debounce
+      if(timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        console.log('Change detected:', eventType, filename, '- regenerating list.json');
+        generate();
+      }, 250);
+    });
+    process.on('SIGINT', () => { watcher.close(); process.exit(0); });
+  }catch(e){
+    console.error('Watch not supported on this platform, exiting watch mode.', e.message || e);
     process.exit(1);
   }
-})();
+} else {
+  // single run
+  generate();
+}

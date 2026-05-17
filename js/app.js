@@ -931,14 +931,31 @@ function loadPage(page) {
             contentDiv.innerHTML = data;
             updateSeo(page);
             
-            // Execute any scripts in the loaded content
+            // Execute any scripts in the loaded content.
+            // Inline scripts are wrapped in an IIFE to avoid global const/let re-declaration
+            // errors when the same page is loaded multiple times.
             const scripts = contentDiv.querySelectorAll('script');
             scripts.forEach(oldScript => {
                 const newScript = document.createElement('script');
                 Array.from(oldScript.attributes).forEach(attr => {
                     newScript.setAttribute(attr.name, attr.value);
                 });
-                newScript.textContent = oldScript.textContent;
+                // If this is an external script, preserve src so browser fetches/executes it.
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                    return;
+                }
+
+                // Inline script: wrap in IIFE unless it's a non-standard type (e.g. module)
+                const type = (oldScript.type || '').trim();
+                if (type && type !== 'text/javascript' && type !== 'application/javascript') {
+                    // preserve as-is for modules or other types
+                    newScript.textContent = oldScript.textContent;
+                } else {
+                    // wrap to avoid leaking const/let into global scope and redeclaration errors
+                    newScript.textContent = '(function(){\n' + oldScript.textContent + '\n})();';
+                }
                 oldScript.parentNode.replaceChild(newScript, oldScript);
             });
             
