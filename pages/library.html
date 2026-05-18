@@ -36,6 +36,7 @@
         <th style="padding:10px 8px">Description</th>
         <th style="padding:10px 8px;white-space:nowrap">Type</th>
         <th style="padding:10px 8px;white-space:nowrap">Size</th>
+        <th style="padding:10px 8px;white-space:nowrap">Cost</th>
         <th style="padding:10px 8px">Actions</th>
       </tr>
     </thead>
@@ -77,8 +78,9 @@
     const desc = norm.description || norm.desc || '';
     const type = (norm.type || '').toUpperCase();
     const size = norm.size || '';
+    const cost = norm.cost || norm.price || norm.amount || '';
     const p = driveSharingToDownload(pathKey || '');
-    return { name, path: p, type, size, desc };
+    return { name, path: p, type, size, desc, cost };
   }
 
   function populateTable(files){
@@ -93,11 +95,12 @@
       const descTd = document.createElement('td'); descTd.style.padding='10px 8px'; descTd.textContent = f.desc || '';
       const typeTd = document.createElement('td'); typeTd.style.padding='10px 8px'; typeTd.textContent = f.type || '';
       const sizeTd = document.createElement('td'); sizeTd.style.padding='10px 8px'; sizeTd.textContent = f.size || '';
+      const costTd = document.createElement('td'); costTd.style.padding='10px 8px'; costTd.textContent = (f.cost || '');
       const actionsTd = document.createElement('td'); actionsTd.style.padding='10px 8px';
       const dl = document.createElement('a'); dl.className='btn'; dl.textContent='Download'; dl.href = f.path; dl.setAttribute('download',''); dl.style.marginRight='8px';
       const view = document.createElement('a'); view.className='btn-outline'; view.textContent='Open'; view.href = f.path; view.target='_blank';
       actionsTd.appendChild(dl); actionsTd.appendChild(view);
-      tr.appendChild(nameTd); tr.appendChild(descTd); tr.appendChild(typeTd); tr.appendChild(sizeTd); tr.appendChild(actionsTd);
+      tr.appendChild(nameTd); tr.appendChild(descTd); tr.appendChild(typeTd); tr.appendChild(sizeTd); tr.appendChild(costTd); tr.appendChild(actionsTd);
       body.appendChild(tr);
     });
     try{ tbl.style.display = 'table'; }catch(e){}
@@ -114,13 +117,16 @@
     files.forEach(f => {
       const card = document.createElement('div'); card.className='file-card';
       const title = document.createElement('div'); title.className='file-title'; title.textContent = f.name || f.path;
-      const meta = document.createElement('div'); meta.className='file-meta'; meta.textContent = [f.type, f.size].filter(Boolean).join(' � ');
+      const meta = document.createElement('div'); meta.className='file-meta'; meta.textContent = [f.type, f.size, f.cost ? ('₹' + f.cost) : ''].filter(Boolean).join(' � ');
+      const costEl = document.createElement('div'); costEl.className='file-meta'; costEl.style.fontWeight='700'; costEl.textContent = f.cost ? ('Price: ₹' + f.cost) : '';
       const desc = document.createElement('div'); desc.className='file-desc'; desc.textContent = f.desc || '';
       const actions = document.createElement('div'); actions.className='file-actions';
       const dl = document.createElement('a'); dl.className='btn'; dl.textContent='Download'; dl.href = f.path; dl.setAttribute('download','');
       const view = document.createElement('a'); view.className='btn-outline'; view.textContent='Open'; view.href = f.path; view.target='_blank';
       actions.appendChild(dl); actions.appendChild(view);
-      card.appendChild(title); if(desc.textContent) card.appendChild(desc); card.appendChild(meta); card.appendChild(actions);
+      card.appendChild(title); if(desc.textContent) card.appendChild(desc); card.appendChild(meta);
+      if(f.cost) card.appendChild(costEl);
+      card.appendChild(actions);
       grid.appendChild(card);
     });
   }
