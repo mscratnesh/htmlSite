@@ -6,7 +6,7 @@
 <title>File Library � Let Money Earn</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-  body{font-family:Inter, system-ui, -apple-system, 'DM Mono', monospace;margin:0;background:#f7fafc;color:#0f172a}
+  .library-body{font-family:Inter, system-ui, -apple-system, 'DM Mono', monospace;margin:0;background:#f7fafc;color:#0f172a}
   .container{max-width:1100px;margin:32px auto;padding:20px}
   h1{font-family:'Bebas Neue',sans-serif;font-size:30px;margin:0 0 8px}
   p.lead{color:#475569;margin:0 0 16px}
@@ -21,11 +21,12 @@
   .empty{padding:40px;background:#fff;border:1px dashed #e6eef6;border-radius:8px;color:#6b7280;text-align:center}
   .note{font-size:13px;color:#6b7280;margin-top:18px}
 </style>
-</head>
+<div class="page-meta" data-page-title="File Library | Let Money Earn" data-page-description="Browse and download files from the library."></div>
 <body>
-<div class="container">
- 
- 
+<div class="container library-body">
+  <h1>Library</h1>
+  <p class="lead">Downloadable resources and files.</p>
+
   <div id="files-grid" class="grid"></div>
   <div id="empty" class="empty" style="display:none">No files available. If you expect files to appear here, ensure `files/list.json` exists or your API is reachable.</div>
   <table id="files-table" style="width:100%;border-collapse:collapse;display:none;margin-top:12px">
@@ -40,13 +41,12 @@
     </thead>
     <tbody id="files-table-body"></tbody>
   </table>
-  
 
   <p class="note">Tip: use the <code>download</code> attribute on links to force browser download. Keep file sizes reasonable for web delivery.</p>
 </div>
+
 <script>
 ;(function(){
-  // Loader: try SheetDB first, then server API /api/files, then static list.json
   const SHEETDB_URL = 'https://sheetdb.io/api/v1/c9doyjtkjcurf';
 
   async function fetchJson(url){
@@ -84,6 +84,7 @@
   function populateTable(files){
     const tbl = document.getElementById('files-table');
     const body = document.getElementById('files-table-body');
+    if(!tbl || !body) return;
     body.innerHTML = '';
     files.forEach(f => {
       const tr = document.createElement('tr');
@@ -99,15 +100,17 @@
       tr.appendChild(nameTd); tr.appendChild(descTd); tr.appendChild(typeTd); tr.appendChild(sizeTd); tr.appendChild(actionsTd);
       body.appendChild(tr);
     });
-    tbl.style.display = 'table';
-    document.getElementById('files-grid').style.display = 'none';
+    try{ tbl.style.display = 'table'; }catch(e){}
+    const gridEl = document.getElementById('files-grid'); if(gridEl) gridEl.style.display = 'none';
   }
 
   function populateGrid(files){
     const grid = document.getElementById('files-grid');
+    const tableEl = document.getElementById('files-table');
+    if(!grid) return;
     grid.innerHTML = '';
-    document.getElementById('files-table').style.display = 'none';
-    document.getElementById('files-grid').style.display = 'grid';
+    if(tableEl) tableEl.style.display = 'none';
+    grid.style.display = 'grid';
     files.forEach(f => {
       const card = document.createElement('div'); card.className='file-card';
       const title = document.createElement('div'); title.className='file-title'; title.textContent = f.name || f.path;
@@ -123,8 +126,16 @@
   }
 
   async function loadList(){
-+    const emptyEl = document.getElementById('empty');
-+    if(emptyEl) emptyEl.style.display='none';
+    const gridEl = document.getElementById('files-grid');
+    const tableEl = document.getElementById('files-table');
+    const emptyEl = document.getElementById('empty');
+    if(!gridEl || !tableEl){
+      // If this script runs before the DOM fragment is attached, retry shortly
+      setTimeout(loadList, 50);
+      return;
+    }
+    if(emptyEl) emptyEl.style.display='none';
+
     // 1) Try SheetDB
     let data = await fetchJson(SHEETDB_URL);
     if(data){
@@ -150,11 +161,9 @@
       if(data && Array.isArray(data.files) && data.files.length){ populateGrid(data.files); return; }
     }
 
--    document.getElementById('empty').style.display='block';
-+    if(emptyEl) emptyEl.style.display='block';
+    if(emptyEl) emptyEl.style.display='block';
   }
 
-  // Run immediately when script is executed
   loadList();
 })();
 </script>
