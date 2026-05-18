@@ -930,35 +930,37 @@ function loadPage(page) {
             const contentDiv = document.getElementById("content");
             contentDiv.innerHTML = data;
             updateSeo(page);
-            
-            // Execute any scripts in the loaded content.
-            // Inline scripts are wrapped in an IIFE to avoid global const/let re-declaration
-            // errors when the same page is loaded multiple times.
-            const scripts = contentDiv.querySelectorAll('script');
-            scripts.forEach(oldScript => {
-                const newScript = document.createElement('script');
-                Array.from(oldScript.attributes).forEach(attr => {
-                    newScript.setAttribute(attr.name, attr.value);
-                });
-                // If this is an external script, preserve src so browser fetches/executes it.
-                if (oldScript.src) {
-                    newScript.src = oldScript.src;
-                    oldScript.parentNode.replaceChild(newScript, oldScript);
+
+            // Collect scripts from the loaded fragment and remove them to prevent immediate execution
+            const scripts = Array.from(contentDiv.querySelectorAll('script'));
+            const toRun = scripts.map(s => {
+                const info = { src: s.src || null, type: (s.type || '').trim(), text: s.textContent };
+                try { s.parentNode.removeChild(s); } catch (e) {}
+                return info;
+            });
+
+            // Execute scripts asynchronously to avoid replaceChild-related parse issues
+            toRun.forEach(item => {
+                if (item.src) {
+                    const sc = document.createElement('script');
+                    if (item.type) sc.type = item.type;
+                    sc.src = item.src;
+                    document.head.appendChild(sc);
                     return;
                 }
 
-                // Inline script: wrap in IIFE unless it's a non-standard type (e.g. module)
-                const type = (oldScript.type || '').trim();
-                if (type && type !== 'text/javascript' && type !== 'application/javascript') {
-                    // preserve as-is for modules or other types
-                    newScript.textContent = oldScript.textContent;
+                const sc = document.createElement('script');
+                if (item.type && item.type !== 'text/javascript' && item.type !== 'application/javascript') {
+                    sc.type = item.type;
+                    sc.textContent = item.text;
+                    document.head.appendChild(sc);
                 } else {
-                    // wrap to avoid leaking const/let into global scope and redeclaration errors
-                    newScript.textContent = '(function(){\n' + oldScript.textContent + '\n})();';
+                    sc.textContent = '(function(){\n' + item.text + '\n})();';
+                    // defer to next tick
+                    setTimeout(() => document.head.appendChild(sc), 0);
                 }
-                oldScript.parentNode.replaceChild(newScript, oldScript);
             });
-            
+
             if (page === 'review') {
                 setupReviewForm();
             }
