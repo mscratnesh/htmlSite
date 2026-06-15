@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>File Library � Let Money Earn</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  .library-body{font-family:Inter, system-ui, -apple-system, 'DM Mono', monospace;margin:0;background:#f7fafc;color:#0f172a}
+  .container{max-width:1100px;margin:32px auto;padding:20px}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:30px;margin:0 0 8px}
+  p.lead{color:#475569;margin:0 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:18px}
+  .file-card{background:#fff;border:1px solid #e6eef6;border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .file-title{font-weight:700;color:#0b1220}
+  .file-meta{font-size:13px;color:#6b7280}
+  .file-desc{font-size:14px;color:#0b1220}
+  .file-actions{margin-top:auto;display:flex;gap:8px;align-items:center}
+  .btn{background:#38b000;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none;font-weight:700}
+  .btn-outline{background:transparent;border:1px solid #d1d5db;color:#475569;padding:8px 12px;border-radius:6px;text-decoration:none}
+  .empty{padding:40px;background:#fff;border:1px dashed #e6eef6;border-radius:8px;color:#6b7280;text-align:center}
+  .note{font-size:13px;color:#6b7280;margin-top:18px}
+</style>
+<div class="page-meta" data-page-title="File Library | Let Money Earn" data-page-description="Browse and download files from the library."></div>
+<body>
+<div class="container library-body">
+  <h1>Library</h1>
+  <p class="lead">Downloadable resources and files.</p>
+
+  <div id="files-grid" class="grid"></div>
+  <div id="empty" class="empty" style="display:none">No files available. If you expect files to appear here, ensure `files/list.json` exists or your API is reachable.</div>
+  <table id="files-table" style="width:100%;border-collapse:collapse;display:none;margin-top:12px">
+    <thead>
+      <tr style="text-align:left;border-bottom:1px solid #e6eef6">
+        <th style="padding:10px 8px">Name</th>
+        <th style="padding:10px 8px">Description</th>
+        <th style="padding:10px 8px;white-space:nowrap">Type</th>
+        <th style="padding:10px 8px;white-space:nowrap">Size</th>
+        <th style="padding:10px 8px;white-space:nowrap">Cost</th>
+        <th style="padding:10px 8px">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="files-table-body"></tbody>
+  </table>
+
+  <p class="note">Tip: use the <code>download</code> attribute on links to force browser download. Keep file sizes reasonable for web delivery.</p>
+</div>
+
+<script>
+;(function(){
+  const SHEETDB_URL = 'https://sheetdb.io/api/v1/c9doyjtkjcurf';
+
+  async function fetchJson(url){
+    try{
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) return null;
+      return await res.json();
+    }catch(e){
+      console.warn('fetch error', url, e && e.message);
+      return null;
+    }
+  }
+
+  function driveSharingToDownload(url){
+    if(!url || typeof url !== 'string') return url;
+    const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if(m && m[1]) return `https://drive.google.com/uc?export=download&id=${m[1]}`;
+    const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if(m2 && m2[1]) return `https://drive.google.com/uc?export=download&id=${m2[1]}`;
+    return url;
+  }
+
+  function normalizeRow(row){
+    const norm = {};
+    Object.keys(row||{}).forEach(k=> norm[k.toLowerCase().replace(/[^a-z0-9]/g,'')] = row[k]);
+    const name = norm.name || norm.title || norm.filename || '';
+    const pathKey = norm.fileaddress || norm.fileaffress || norm.fileaddr || norm.file || norm.url || norm.link || norm.filepath || norm.path || '';
+    const desc = norm.description || norm.desc || '';
+    const type = (norm.type || '').toUpperCase();
+    const size = norm.size || '';
+    const cost = norm.cost || norm.price || norm.amount || '';
+    const p = driveSharingToDownload(pathKey || '');
+    return { name, path: p, type, size, desc, cost };
+  }
+
+  function populateTable(files){
+    const tbl = document.getElementById('files-table');
+    const body = document.getElementById('files-table-body');
+    if(!tbl || !body) return;
+    body.innerHTML = '';
+    files.forEach(f => {
+      const tr = document.createElement('tr');
+      tr.style.borderBottom = '1px solid #f1f5f9';
+      const nameTd = document.createElement('td'); nameTd.style.padding='10px 8px'; nameTd.textContent = f.name || f.path;
+      const descTd = document.createElement('td'); descTd.style.padding='10px 8px'; descTd.textContent = f.desc || '';
+      const costTd = document.createElement('td'); costTd.style.padding='10px 8px'; costTd.textContent = (f.cost || '');
+      const actionsTd = document.createElement('td'); actionsTd.style.padding='10px 8px';
+      const dl = document.createElement('a'); dl.className='btn'; dl.textContent='Download'; dl.href = f.path; dl.setAttribute('download',''); dl.style.marginRight='8px';
+      const view = document.createElement('a'); view.className='btn-outline'; view.textContent='Open'; view.href = f.path; view.target='_blank';
+      actionsTd.appendChild(dl); actionsTd.appendChild(view);
+      tr.appendChild(nameTd); tr.appendChild(descTd); tr.appendChild(costTd); tr.appendChild(actionsTd);
+      body.appendChild(tr);
+    });
+    try{ tbl.style.display = 'table'; }catch(e){}
+    const gridEl = document.getElementById('files-grid'); if(gridEl) gridEl.style.display = 'none';
+  }
+
+  function populateGrid(files){
+    const grid = document.getElementById('files-grid');
+    const tableEl = document.getElementById('files-table');
+    if(!grid) return;
+    grid.innerHTML = '';
+    if(tableEl) tableEl.style.display = 'none';
+    grid.style.display = 'grid';
+    files.forEach(f => {
+      const card = document.createElement('div'); card.className='file-card';
+      const title = document.createElement('div'); title.className='file-title'; title.textContent = f.name || f.path;
+      const meta = document.createElement('div'); meta.className='file-meta'; meta.textContent = f.cost ? ('Price: ₹' + f.cost) : '';
+      const costEl = null;
+      const desc = document.createElement('div'); desc.className='file-desc'; desc.textContent = f.desc || '';
+      const actions = document.createElement('div'); actions.className='file-actions';
+      const dl = document.createElement('a'); dl.className='btn'; dl.textContent='Download'; dl.href = f.path; dl.setAttribute('download','');
+      const view = document.createElement('a'); view.className='btn-outline'; view.textContent='Open'; view.href = f.path; view.target='_blank';
+      actions.appendChild(dl); actions.appendChild(view);
+      card.appendChild(title); if(desc.textContent) card.appendChild(desc); card.appendChild(meta); card.appendChild(actions);
+      grid.appendChild(card);
+    });
+  }
+
+  async function loadList(){
+    const gridEl = document.getElementById('files-grid');
+    const tableEl = document.getElementById('files-table');
+    const emptyEl = document.getElementById('empty');
+    if(!gridEl || !tableEl){
+      // If this script runs before the DOM fragment is attached, retry shortly
+      setTimeout(loadList, 50);
+      return;
+    }
+    if(emptyEl) emptyEl.style.display='none';
+
+    // 1) Try SheetDB
+    let data = await fetchJson(SHEETDB_URL);
+    if(data){
+      const rows = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : null);
+      if(rows && rows.length){
+        const files = rows.map(r => normalizeRow(r));
+        if(files.length){ populateTable(files); return; }
+      }
+    }
+
+    // 2) Try server API
+    data = await fetchJson('/api/files');
+    if(data && Array.isArray(data.files) && data.files.length){ populateGrid(data.files); return; }
+
+    // 3) Try static list.json candidates
+    const candidates = [
+      window.location.origin + '/files/list.json',
+      new URL('files/list.json', window.location.href).href,
+      'files/list.json','./files/list.json','../files/list.json'
+    ];
+    for(const c of candidates){
+      data = await fetchJson(c);
+      if(data && Array.isArray(data.files) && data.files.length){ populateGrid(data.files); return; }
+    }
+
+    if(emptyEl) emptyEl.style.display='block';
+  }
+
+  loadList();
+})();
+</script>
+</body>
+</html>

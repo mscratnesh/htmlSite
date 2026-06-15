@@ -1,0 +1,12 @@
+{
+  "name": "htmlsite-files",
+  "version": "1.0.0",
+  "description": "Utilities for generating files list for library page",
+  "scripts": {
+    "generate-files": "node scripts/generate-file-list.js",
+    "watch-files": "node scripts/generate-file-list.js --watch",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}

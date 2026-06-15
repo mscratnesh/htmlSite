@@ -319,6 +319,17 @@ const seoConfig = {
             }
         }
     },
+    "options-instagram-posts": {
+        title: "Options Strategy Instagram Cards | Let Money Earn",
+        description: "Download Instagram-ready PNG cards (1080x1080) illustrating popular options trading strategies in Hindi. Free resources from Let Money Earn.",
+        jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "name": "Options Strategy Instagram Cards",
+            "description": "A set of Instagram-ready cards illustrating options trading strategies in Hindi.",
+            "inLanguage": "hi"
+        }
+    },
     "calculators": {
         title: "Financial Calculators | Let Money Earn",
         description: "Interactive SIP, lump sum, tax, and retirement calculators.",
@@ -919,18 +930,37 @@ function loadPage(page) {
             const contentDiv = document.getElementById("content");
             contentDiv.innerHTML = data;
             updateSeo(page);
-            
-            // Execute any scripts in the loaded content
-            const scripts = contentDiv.querySelectorAll('script');
-            scripts.forEach(oldScript => {
-                const newScript = document.createElement('script');
-                Array.from(oldScript.attributes).forEach(attr => {
-                    newScript.setAttribute(attr.name, attr.value);
-                });
-                newScript.textContent = oldScript.textContent;
-                oldScript.parentNode.replaceChild(newScript, oldScript);
+
+            // Collect scripts from the loaded fragment and remove them to prevent immediate execution
+            const scripts = Array.from(contentDiv.querySelectorAll('script'));
+            const toRun = scripts.map(s => {
+                const info = { src: s.src || null, type: (s.type || '').trim(), text: s.textContent };
+                try { s.parentNode.removeChild(s); } catch (e) {}
+                return info;
             });
-            
+
+            // Execute scripts asynchronously to avoid replaceChild-related parse issues
+            toRun.forEach(item => {
+                if (item.src) {
+                    const sc = document.createElement('script');
+                    if (item.type) sc.type = item.type;
+                    sc.src = item.src;
+                    document.head.appendChild(sc);
+                    return;
+                }
+
+                const sc = document.createElement('script');
+                if (item.type && item.type !== 'text/javascript' && item.type !== 'application/javascript') {
+                    sc.type = item.type;
+                    sc.textContent = item.text;
+                    document.head.appendChild(sc);
+                } else {
+                    sc.textContent = '(function(){\n' + item.text + '\n})();';
+                    // defer to next tick
+                    setTimeout(() => document.head.appendChild(sc), 0);
+                }
+            });
+
             if (page === 'review') {
                 setupReviewForm();
             }
